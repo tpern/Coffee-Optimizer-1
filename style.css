@@ -1,0 +1,567 @@
+/* --------------------
+   Base Reset
+-------------------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  background: #f6f3ef;
+  color: #2f2b26;
+  line-height: 1.5;
+}
+
+/* --------------------
+   Layout
+-------------------- */
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+/* --------------------
+   Typography
+-------------------- */
+h1 {
+  font-size: 1.9rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: #3a352f;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5em;
+  color: #3a352f;
+}
+
+label {
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+  display: block;
+  color: #4a443d;
+}
+
+/* --------------------
+   Sections & Cards
+-------------------- */
+.section {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1rem 1.1rem 1.2rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.25rem 1.3rem;
+  margin-top: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* --------------------
+   Inputs
+-------------------- */
+select,
+input[type="date"],
+input[type="text"],
+input[type="number"],
+textarea {
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  margin-bottom: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid #d9d4cd;
+  background: #faf9f7;
+  font-size: 0.9rem;
+  color: #2f2b26;
+}
+
+select:focus,
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #a58d6f;
+  background: #ffffff;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+/* --------------------
+   Buttons
+-------------------- */
+button {
+  width: 100%;
+  background: #a58d6f;
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: #947a5f;
+}
+
+/* Button variations */
+button[style*="width:auto"] {
+  width: auto;
+  flex-shrink: 0;
+}
+
+button[style*="background:#6b7280"] {
+  background: #6b7280;
+}
+
+button[style*="background:#6b7280"]:hover {
+  background: #4b5563;
+}
+
+/* --------------------
+   Output Styling
+-------------------- */
+.card h3 {
+  margin-top: 0;
+}
+
+.card p {
+  margin: 0.35rem 0;
+}
+
+.card hr {
+  border: none;
+  border-top: 1px solid #eee9e3;
+  margin: 0.75rem 0;
+}
+
+/* --------------------
+   Mobile Optimization
+-------------------- */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .container {
+    padding: 1.25rem 1rem 2.5rem;
+  }
+
+  .section,
+  .card {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  button {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+
+  .farmer-code-container {
+    flex-direction: column;
+  }
+
+  .farmer-code-container button {
+    width: 100%;
+  }
+
+  .flex-container {
+    flex-direction: column;
+  }
+
+  .flex-container button {
+    width: 100%;
+  }
+
+  .brew-params-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===================================================== */
+/* EXPLANATION CARDS & LEARNING STATUS STYLING */
+/* ===================================================== */
+
+.explanation-card,
+.learning-card,
+.recipe-card {
+  margin: 1.5em 0;
+  padding: 1.5em;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.explanation-card h3,
+.learning-card h3,
+.recipe-card h3 {
+  margin-top: 0;
+  color: #1f2937;
+  font-size: 1.25em;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0.5em;
+}
+
+/* Recipe Explanation - Collapsible */
+.explanation-card details {
+  margin-top: 1em;
+}
+
+.explanation-card summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1em;
+  padding: 0.75em;
+  background: #f9fafb;
+  border-radius: 6px;
+  user-select: none;
+}
+
+.explanation-card summary:hover {
+  background: #f3f4f6;
+}
+
+.explanation-content {
+  padding: 1em;
+  margin-top: 0.5em;
+  line-height: 1.6;
+}
+
+/* Extraction Analysis Styling */
+.ratings-summary {
+  background: #f9fafb;
+  padding: 1em;
+  border-radius: 6px;
+  margin: 1em 0;
+}
+
+.diagnosis-box {
+  padding: 1em;
+  border-radius: 6px;
+  margin: 1em 0;
+  font-weight: 500;
+}
+
+.diagnosis-box.diagnosis-under {
+  background: #fef3c7;
+  border-left: 4px solid #f59e0b;
+}
+
+.diagnosis-box.diagnosis-over {
+  background: #fee2e2;
+  border-left: 4px solid #dc2626;
+}
+
+.diagnosis-box.diagnosis-balanced {
+  background: #d1fae5;
+  border-left: 4px solid #10b981;
+}
+
+.why-section {
+  background: #f0f9ff;
+  padding: 1em;
+  border-radius: 6px;
+  margin: 1em 0;
+}
+
+.why-section ul {
+  margin: 0.5em 0 0 0;
+  padding-left: 1.5em;
+}
+
+.why-section li {
+  margin: 0.5em 0;
+}
+
+/* Learning Progress Bar */
+.progress-bar {
+  width: 100%;
+  height: 24px;
+  background: #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 1em 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  transition: width 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+.learnings-list {
+  background: #f0fdf4;
+  padding: 1em;
+  border-radius: 6px;
+  margin-top: 1em;
+  border-left: 4px solid #22c55e;
+}
+
+.learnings-list ul {
+  margin: 0.5em 0 0 0;
+  padding-left: 1.5em;
+}
+
+.learnings-list li {
+  margin: 0.5em 0;
+  color: #166534;
+}
+
+/* Learned Adjustments Box */
+.learned-adjustments {
+  background: #f0fdf4;
+  border: 2px solid #22c55e;
+  border-radius: 6px;
+  padding: 1em;
+  margin-top: 1em;
+}
+
+.learned-adjustments h4 {
+  margin-top: 0;
+  color: #166534;
+}
+
+/* Learning Results */
+.learning-results {
+  background: #eff6ff;
+  padding: 1.5em;
+  border-radius: 8px;
+  margin: 1.5em 0;
+  border-left: 4px solid #3b82f6;
+}
+
+.learning-results h3 {
+  margin-top: 0;
+  color: #1e40af;
+}
+
+/* Hide old debug inspector by default */
+#debug-inspector {
+  display: none;
+}
+
+/* Optional: Show debug in dev mode */
+body.debug-mode #debug-inspector {
+  display: block;
+  margin-top: 2em;
+  padding: 1em;
+  background: #f3f4f6;
+  border: 1px dashed #9ca3af;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.85em;
+}
+
+/* ===================================================== */
+/* ACCESS LEVEL DISPLAY */
+/* ===================================================== */
+#access-level-display {
+  text-align: center;
+  padding: 0.5em;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  font-size: 0.9em;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.access-level.access-free {
+  background: #f0f9ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+.access-level.access-pro {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.access-level.access-farmer {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #86efac;
+}
+
+/* ===================================================== */
+/* PRIVACY CONSENT MODAL */
+/* ===================================================== */
+#privacy-consent-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+#privacy-consent-modal > div {
+  background: white;
+  padding: 2em;
+  border-radius: 16px;
+  max-width: 500px;
+  margin: 1em;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 600px) {
+  #privacy-consent-modal > div {
+    padding: 1.5em;
+    margin: 0.5em;
+  }
+}
+
+/* ===================================================== */
+/* BLEND DETAILS SECTION */
+/* ===================================================== */
+#blend-details-section {
+  display: none;
+  margin-top: 1em;
+  padding: 1em;
+  background: #f9fafb;
+  border-radius: 8px;
+  border-left: 3px solid #a58d6f;
+}
+
+#blend-details-section h4 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #3a352f;
+}
+
+#blend-details-section label {
+  margin-top: 0.75em;
+}
+
+#blend-details-section input[type="text"] {
+  margin-bottom: 0.75rem;
+}
+
+/* ===================================================== */
+/* FARMER ACCESS SECTION */
+/* ===================================================== */
+.farmer-code-container {
+  display: flex;
+  gap: 0.5em;
+  align-items: stretch;
+}
+
+#farmer-code-input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.farmer-code-container button {
+  width: auto;
+  padding: 0.55rem 1.25rem;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+/* ===================================================== */
+/* PRIVACY SETTINGS SECTION */
+/* ===================================================== */
+.privacy-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 0.75em;
+  cursor: pointer;
+}
+
+.privacy-checkbox-label input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  cursor: pointer;
+}
+
+.privacy-checkbox-label span {
+  user-select: none;
+}
+
+/* ===================================================== */
+/* CHECKBOX STYLING */
+/* ===================================================== */
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #a58d6f;
+}
+
+/* ===================================================== */
+/* FLEX CONTAINERS */
+/* ===================================================== */
+.flex-container {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.flex-container input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.flex-container button {
+  width: auto;
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+
+/* ===================================================== */
+/* BREW PARAMETERS SECTION */
+/* ===================================================== */
+.brew-params-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.brew-params-grid > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.brew-params-grid > div label {
+  margin-bottom: 0.25rem;
+}
+
+.brew-params-grid > div input {
+  margin-bottom: 0;
+}
