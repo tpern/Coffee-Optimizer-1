@@ -14,310 +14,34 @@
   <!-- ACCESS LEVEL DISPLAY -->
   <div id="access-level-display" class="access-level"></div>
 
-  <!-- SECTION 1: User Type -->
-  <div class="section">
-    <label for="user-type">Are you a Home Barista or a Café?</label>
-    <select id="user-type">
-      <option value="">-- Choose --</option>
-      <option value="home">Home Barista</option>
-      <option value="cafe">Café / Professional</option>
-    </select>
-  </div>
+  <!-- Add rest of the content here -->
 
-  <!-- SECTION 2: Coffee Details -->
-  <div class="section">
-    <h3>Coffee Details</h3>
+  <!-- ADMIN DASHBOARD -->
+  <section class="section" id="admin-dashboard" style="display:none;">
+    <h3>Admin Dashboard</h3>
+    <p>Your admin access only. View anonymized brewing data.</p>
 
-    <label for="origin">Origin</label>
-    <select id="origin">
-      <option value="">-- Choose --</option>
-      <option value="Ethiopia">Ethiopia</option>
-      <option value="Kenya">Kenya</option>
-      <option value="Colombia">Colombia</option>
-      <option value="Brazil">Brazil</option>
-      <option value="Guatemala">Guatemala</option>
-      <option value="Costa-rica">Costa Rica</option>
-      <option value="Panama">Panama</option>
-      <option value="Peru">Peru</option>
-      <option value="Mexico">Mexico</option>
-      <option value="blend">Blend</option>
-    </select>
-
-    <!-- Blend Details Section (shown when Blend is selected) -->
-    <div id="blend-details-section">
-      <h4>Blend Details</h4>
-      <label for="blend-components">Blend Components (e.g., "60% Ethiopia, 40% Colombia")</label>
-      <input type="text" id="blend-components" placeholder="Describe the blend components" />
-      <label for="blend-ratio">Blend Ratio</label>
-      <input type="text" id="blend-ratio" placeholder="e.g., 70/30, 50/50" />
-    </div>
-
-    <label for="altitude">Altitude</label>
-    <select id="altitude">
-      <option value="">-- Choose --</option>
-      <option value="0-800m">0–800m</option>
-      <option value="800-1200m">800–1200m</option>
-      <option value="1200-1800m">1200–1800m</option>
-      <option value="1800m+">1800m+</option>
-    </select>
-
-    <label for="varietal">Varietal</label>
-    <select id="varietal">
-      <option value="">-- Choose --</option>
-      <option value="heirloom">Heirloom</option>
-      <option value="typica">Typica</option>
-      <option value="caturra">Caturra</option>
-      <option value="bourbon">Bourbon</option>
-      <option value="pacamara">Pacamara</option>
-    </select>
-
-    <label for="roast-date">Roast Date</label>
-    <input type="date" id="roast-date" />
-
-    <label for="processing">Processing Method</label>
-    <select id="processing">
-      <option value="">-- Choose --</option>
-      <option value="washed">Washed</option>
-      <option value="natural">Natural</option>
-      <option value="honey">Honey</option>
-      <option value="wet-hulled">Wet Hulled</option>
-      <option value="pulped-natural">Pulped Natural</option>
-      <option value="anaerobic">Anaerobic</option>
-      <option value="semi-washed">Semi-Washed</option>
-    </select>
-
-    <label for="roast-level">Roast Level</label>
-    <select id="roast-level">
-      <option value="">-- Choose --</option>
-      <option value="light">Light</option>
-      <option value="medium">Medium</option>
-      <option value="medium-dark">Medium-Dark</option>
-      <option value="dark">Dark</option>
-    </select>
-  </div>
-
-  <!-- SECTION 3: Brew Method -->
-  <div class="section">
-    <h3>Brew Method</h3>
-
-    <label for="brew-method">Select Brew Method:</label>
-    <select id="brew-method">
-      <option value="">-- Choose --</option>
-      <option value="espresso">Espresso</option>
-      <option value="v60">V60</option>
-      <option value="chemex">Chemex</option>
-      <option value="aeropress">Aeropress</option>
-      <option value="french-press">French Press</option>
-      <option value="turkish">Turkish</option>
-      <option value="moka-pot">Moka Pot</option>
-      <option value="balance-siphon">Balance Siphon</option>
-      <option value="syphon">Syphon</option>
-      <option value="cold-brew">Cold Brew</option>
-    </select>
-
-    <!-- Espresso-only -->
-    <div id="espresso-machine-section" style="display:none;">
-      <label for="espresso-machine">Espresso Machine</label>
-      <select id="espresso-machine">
-        <option value="">-- Choose --</option>
-      </select>
-
-      <div id="pressure-profile-section" style="display:none;">
-        <label for="pressure-profile">Pressure Profile</label>
-        <select id="pressure-profile">
-          <option value="">-- Choose pressure profile --</option>
-        </select>
-
-        <div
-          id="pressure-profile-warning"
-          style="font-size:0.9em; margin-top:4px;"
-        ></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SECTION 4: Grinder -->
-  <div class="section">
-    <label for="grinder">Grinder</label>
-    <select id="grinder">
-      <option value="">-- Choose --</option>
-    </select>
-  </div>
-
-  <!-- SECTION 5: Water -->
-  <div class="section">
-    <label for="water-type">Water Type</label>
-    <select id="water-type">
-      <option value="">-- Choose --</option>
-      <option value="tap">Tap</option>
-      <option value="filtered">Filtered</option>
-      <option value="distilled">Distilled</option>
-      <option value="reverse-osmosis">RO</option>
-      <option value="third-wave">Third Wave Water</option>
-      <option value="spring">Spring</option>
-    </select>
-  </div>
-
-  <!-- BUTTON: Get Initial Recipe (MOVED HERE - BEFORE TASTE FEEDBACK) -->
-  <button id="submit-btn">Get Initial Brew Recipe</button>
-
-  <div class="card" id="output"></div>
-
-<!-- SECTION 6: Actual Brew Parameters (Optional) -->
-<div class="section" id="brew-parameters-section">
-  <h3>Actual Brew Parameters (Optional)</h3>
-  <p style="font-size:0.9em; color:#666; margin-bottom:1em;">
-    Record the actual parameters you used for this brew. This helps improve recommendations and research.
-  </p>
-
-  <div class="brew-params-grid">
-    <div>
-      <label for="dose-used">Dose Used (grams)</label>
-      <input type="number" id="dose-used" min="0" max="100" step="0.1" placeholder="e.g., 18.0" />
-    </div>
-    <div>
-      <label for="yield-used">Yield (grams/ml)</label>
-      <input type="number" id="yield-used" min="0" max="1000" step="0.1" placeholder="e.g., 36.0" />
-    </div>
-  </div>
-
-  <div class="brew-params-grid">
-    <div>
-      <label for="grind-setting">Grind Setting</label>
-      <input type="number" id="grind-setting" min="0" max="100" step="0.5" placeholder="e.g., 4.5" />
-    </div>
-    <div>
-      <label for="water-temp">Water Temp (°C)</label>
-      <input type="number" id="water-temp" min="0" max="100" step="0.5" placeholder="e.g., 93.0" />
-    </div>
-  </div>
-</div>
-
-<!-- SECTION 7: SCA Taste Feedback (UPDATED - NO DEFAULT VALUES) -->
-<div class="section" id="taste-feedback-section">
-  <h3>Taste Feedback (SCA Scale)</h3>
-  <p style="font-size:0.9em; color:#666; margin-bottom:1em;">
-    After brewing, rate each attribute from 0-10 (5 = neutral, below 5 = deficient, above 5 = excellent)
-  </p>
-
-  <label for="aroma">Aroma (0-10)</label>
-  <input type="number" id="aroma" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
-
-  <label for="flavor">Flavor (0-10)</label>
-  <input type="number" id="flavor" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
-
-  <label for="aftertaste">Aftertaste (0-10)</label>
-  <input type="number" id="aftertaste" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
-
-  <label for="acidity">Acidity (0-10)</label>
-  <input type="number" id="acidity" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
-
-  <label for="body">Body (0-10)</label>
-  <input type="number" id="body" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
-
-  <label for="balance">Balance (0-10)</label>
-  <input type="number" id="balance" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
-
-  <label for="sweetness">Sweetness (0-10)</label>
-  <input type="number" id="sweetness" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
-
-  <label for="overall">Overall (0-10)</label>
-  <input type="number" id="overall" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
-
-  <button id="feedback-submit-btn" type="button" style="margin-top:1em;">Submit Feedback & Learn</button>
-</div>
-
-  
-  <!-- SECTION 8: Learning Tools -->
-  <section class="section">
-    <h3>Learning Tools</h3>
-    <button type="button" onclick="exportLearningData()">Export Learning Data</button>
-    <label for="learning-import" style="display:block; margin-top:0.5em;">
-      Import Learning Data:
-      <input 
-        type="file" 
-        id="learning-import" 
-        accept="application/json"
-        onchange="importLearningData(this.files[0])"
-        style="margin-left:0.5em;"
-      />
-    </label>
-  </section>
-
-  <!-- SECTION 9: Farmer Access -->
-  <section class="section">
-    <h3>Farmer Access</h3>
-    <p style="font-size:0.9em; color:#666; margin-bottom:0.75em;">Enter farmer access code to unlock premium features.</p>
-    <div class="farmer-code-container">
-      <input 
-        type="text" 
-        id="farmer-code-input" 
-        placeholder="Enter farmer code"
-      />
-      <button 
-        type="button" 
-        onclick="handleFarmerCodeSubmit(document.getElementById('farmer-code-input'))"
-      >
-        Activate
-      </button>
-    </div>
-  </section>
-
-  <!-- SECTION 10: Privacy Settings -->
-  <section class="section">
-    <h3>Privacy & Data Sharing</h3>
-    <p style="font-size:0.9em; color:#666; margin-bottom:0.75em;">Control your data sharing preferences for research purposes.</p>
-    <label class="privacy-checkbox-label">
-      <input 
-        type="checkbox" 
-        id="data-sharing-checkbox"
-        onchange="savePrivacySettings(true, this.checked)"
-      />
-      <span>Enable anonymized data sharing for research</span>
-    </label>
-    <button 
-      type="button" 
-      onclick="savePrivacySettings(true, document.getElementById('data-sharing-checkbox').checked)"
-      style="margin-top:0.5em;"
+    <!-- Admin Auth Field -->
+    <label for="admin-access-key">Enter Admin Passcode: </label>
+    <input
+      type="password"
+      id="admin-access-key"
+      placeholder="Enter admin passcode..."
+    />
+    <button
+      type="button"
+      id="admin-key-submit"
     >
-      Save Privacy Settings
+      Unlock Dashboard
     </button>
-  </section>
-
-  <!-- SECTION 11: Debug & Admin -->
-  <section class="section">
-    <h3>Debug & Admin</h3>
-    <button type="button" onclick="resetAllLearning()">Reset All Learning</button>
-    <button type="button" onclick="resetBrewHistory()">Reset Brew History</button>
-    <button type="button" onclick="resetEverything()">Reset Everything</button>
-    <div id="debug-inspector" style="margin-top:1em;"></div>
-  </section>
-
-</div>
-
-<!-- Privacy Consent Modal -->
-<div id="privacy-consent-modal">
-  <div>
-    <h3 style="margin-top:0;">Privacy & Data Collection</h3>
-    <p>We collect anonymized brewing data to improve our recommendations and conduct research. All data is anonymized and cannot be traced back to you.</p>
-    <p style="font-size:0.9em; color:#666;">Would you like to enable data sharing for research purposes?</p>
-    <div class="flex-container" style="margin-top:1.5em;">
-      <button 
-        type="button" 
-        onclick="savePrivacySettings(true, true); document.getElementById('privacy-consent-modal').style.display='none';"
-        style="flex:1;"
-      >
-        Yes, Enable
-      </button>
-      <button 
-        type="button" 
-        onclick="savePrivacySettings(true, false); document.getElementById('privacy-consent-modal').style.display='none';"
-        style="flex:1; background:#6b7280;"
-      >
-        No, Disable
-      </button>
+    
+    <!-- Anonymized Data Display -->
+    <div id="admin-data-display" style="margin-top: 1.5em; display:none;">
+      <h4>Collected Data</h4>
+      <pre id="admin-data"></pre>
     </div>
-  </div>
+  </section>
+
 </div>
 
 <script src="script.js"></script>
