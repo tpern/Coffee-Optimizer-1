@@ -718,7 +718,10 @@ function updateLearningModel(selections, extractionDiagnosis) {
 // =====================================================
 const STORAGE_KEYS = {
   history: "coffee_brew_history",
-  learning: "coffee_learning_model"
+  learning: "coffee_learning_model",
+  accessLevel: "coffee_access_level",
+  privacyConsent: "coffee_privacy_consent",
+  dataSharingPreference: "coffee_data_sharing"
 };
 
 (function loadPersistedData() {
@@ -1047,7 +1050,11 @@ document.getElementById("submit-btn").addEventListener("click", function () {
   const selections = {
     userType: document.getElementById("user-type").value,
     brewMethod: document.getElementById("brew-method").value,
-    grinder: document.getElementById("grinder").value
+    grinder: document.getElementById("grinder").value,
+    origin: document.getElementById("origin")?.value || "",
+    altitude: document.getElementById("altitude")?.value || "",
+    processing: document.getElementById("processing")?.value || "",
+    roastLevel: document.getElementById("roast-level")?.value || ""
   };
 
   if (!selections.brewMethod || !selections.grinder) {
@@ -1125,7 +1132,11 @@ document.getElementById("feedback-submit-btn").addEventListener("click", functio
   const selections = {
     userType: document.getElementById("user-type").value,
     brewMethod: document.getElementById("brew-method").value,
-    grinder: document.getElementById("grinder").value
+    grinder: document.getElementById("grinder").value,
+    origin: document.getElementById("origin")?.value || "",
+    altitude: document.getElementById("altitude")?.value || "",
+    processing: document.getElementById("processing")?.value || "",
+    roastLevel: document.getElementById("roast-level")?.value || ""
   };
 
   if (!selections.brewMethod || !selections.grinder) {
@@ -1155,12 +1166,34 @@ document.getElementById("feedback-submit-btn").addEventListener("click", functio
   const adjustmentAdvice = adjustRecipe(extractionDiagnosis, selections);
   const extractionExplanation = generateExtractionExplanation(scaFeedback, extractionDiagnosis);
 
-  brewHistory.push({
+  const brewData = {
     selections,
     scaFeedback,
     extractionDiagnosis,
     timestamp: Date.now()
-  });
+  };
+
+  brewHistory.push(brewData);
+
+  // Collect universal data for research (if consent given)
+  const roastDateEl = document.getElementById("roast-date");
+  const doseUsedEl = document.getElementById("dose-used");
+  const yieldUsedEl = document.getElementById("yield-used");
+  const grindSettingEl = document.getElementById("grind-setting");
+  const waterTempEl = document.getElementById("water-temp");
+  
+  const brewEntry = {
+    brewMethod: selections.brewMethod,
+    extractionDiagnosis: extractionDiagnosis,
+    selections: selections,
+    roastDate: roastDateEl?.value || null,
+    doseUsed: doseUsedEl?.value ? parseFloat(doseUsedEl.value) : null,
+    yieldUsed: yieldUsedEl?.value ? parseFloat(yieldUsedEl.value) : null,
+    grindSetting: grindSettingEl?.value ? parseFloat(grindSettingEl.value) : null,
+    waterTemp: waterTempEl?.value ? parseFloat(waterTempEl.value) : null
+  };
+  
+  collectUniversalData(brewEntry);
 
   updateLearningModel(selections, extractionDiagnosis);
   persistLearningData();
@@ -1558,9 +1591,170 @@ function handleFarmerCodeSubmit(codeInput) {
   }
 }
 
+// =====================================================
+// DATA COLLECTION FUNCTIONS
+// =====================================================
+let universalDataQueue = [];
+
+(function loadDataQueue() {
+  const savedDataQueue = localStorage.getItem("coffee_research_queue");
+  if (savedDataQueue) {
+    try {
+      universalDataQueue = JSON.parse(savedDataQueue);
+    } catch (e) {
+      console.warn("Failed to load research data queue");
+    }
+  }
+})();
+
+function getWeekNumber(date) {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+}
+
+function getWeekIdentifier() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const week = getWeekNumber(now);
+  return `${year}-W${week.toString().padStart(2, '0')}`;
+}
+
+function calculateRoastAge(roastDate) {
+  if (!roastDate) return null;
+  try {
+    const roast = new Date(roastDate);
+    const now = new Date();
+    const diffTime = Math.abs(now - roast);
+    const diffWeeks = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7));
+    return diffWeeks;
+  } catch (e) {
+    return null;
+  }
+}
+
+function anonymizeForResearch(data) {
+  return {
+    weekId: getWeekIdentifier(),
+    brewMethod: data.brewMethod,
+    extractionState: data.extractionDiagnosis?.extractionState || "unknown",
+    confidence: data.extractionDiagnosis?.confidence || 0,
+    origin: data.selections?.origin || "unknown",
+    altitude: data.selections?.altitude || "unknown",
+    processing: data.selections?.processing || "unknown",
+    roastLevel: data.selections?.roastLevel || "unknown",
+    doseGrams: data.doseUsed || null,
+    yieldGrams: data.yieldUsed || null,
+    actualGrindSetting: data.grindSetting || null,
+    roastAgeWeeks: calculateRoastAge(data.roastDate) || null,
+    waterTempC: data.waterTemp || null,
+    timestamp: Date.now()
+  };
+}
+
+function collectUniversalData(brewData) {
+  if (!getUserDataSharingPreference()) {
+    return; // Don't collect if user hasn't consented
+  }
+  
+  const anonymized = anonymizeForResearch(brewData);
+  universalDataQueue.push(anonymized);
+  
+  // Store queue in localStorage (limit to last 100 entries)
+  if (universalDataQueue.length > 100) {
+    universalDataQueue = universalDataQueue.slice(-100);
+  }
+  localStorage.setItem("coffee_research_queue", JSON.stringify(universalDataQueue));
+}
+
+// =====================================================
+// PRIVACY & DATA SHARING FUNCTIONS
+// =====================================================
+function savePrivacySettings(consented, dataSharingEnabled) {
+  if (!STORAGE_KEYS.privacyConsent) {
+    STORAGE_KEYS.privacyConsent = "coffee_privacy_consent";
+    STORAGE_KEYS.dataSharingPreference = "coffee_data_sharing";
+  }
+  
+  localStorage.setItem(STORAGE_KEYS.privacyConsent, JSON.stringify({
+    consented: consented,
+    timestamp: Date.now(),
+    dataSharingEnabled: dataSharingEnabled || false
+  }));
+  
+  if (dataSharingEnabled) {
+    localStorage.setItem(STORAGE_KEYS.dataSharingPreference, "enabled");
+  } else {
+    localStorage.setItem(STORAGE_KEYS.dataSharingPreference, "disabled");
+  }
+  
+  console.info("Privacy settings saved");
+}
+
+function getUserDataSharingPreference() {
+  if (!STORAGE_KEYS.dataSharingPreference) {
+    STORAGE_KEYS.dataSharingPreference = "coffee_data_sharing";
+  }
+  const pref = localStorage.getItem(STORAGE_KEYS.dataSharingPreference);
+  return pref === "enabled";
+}
+
+function checkFirstTimeConsent() {
+  if (!STORAGE_KEYS.privacyConsent) {
+    STORAGE_KEYS.privacyConsent = "coffee_privacy_consent";
+  }
+  const consent = localStorage.getItem(STORAGE_KEYS.privacyConsent);
+  if (!consent) {
+    const modal = document.getElementById("privacy-consent-modal");
+    if (modal) {
+      modal.style.display = "flex";
+    } else {
+      const consented = confirm("We collect anonymized brewing data for research. Do you consent?");
+      const dataSharing = consented && confirm("Enable data sharing for research?");
+      savePrivacySettings(consented, dataSharing);
+    }
+  }
+}
+
+// =====================================================
+// BLEND DETAILS HANDLING
+// =====================================================
+function handleOriginChange() {
+  const originSelect = document.getElementById("origin");
+  const blendDetailsSection = document.getElementById("blend-details-section");
+  
+  if (!originSelect) return;
+  
+  const selectedValue = originSelect.value.toLowerCase();
+  const isBlend = selectedValue.includes("blend") || selectedValue === "blend";
+  
+  if (blendDetailsSection) {
+    blendDetailsSection.style.display = isBlend ? "block" : "none";
+  }
+}
+
 // Check admin status on page load
 document.addEventListener("DOMContentLoaded", function() {
   updateAccessLevelDisplay();
+  
+  // Check first-time privacy consent
+  checkFirstTimeConsent();
+  
+  // Load privacy settings checkbox state
+  const dataSharingCheckbox = document.getElementById("data-sharing-checkbox");
+  if (dataSharingCheckbox) {
+    dataSharingCheckbox.checked = getUserDataSharingPreference();
+  }
+  
+  // Attach origin change listener for blend details
+  const originSelect = document.getElementById("origin");
+  if (originSelect) {
+    originSelect.addEventListener("change", handleOriginChange);
+    handleOriginChange(); // Check initial state
+  }
+  
   if (isAdmin()) {
     showAdminDashboard();
   } else {
