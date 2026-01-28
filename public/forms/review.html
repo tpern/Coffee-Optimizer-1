@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit a Grinder Review - Coffee Optimizer</title>
+  <link rel="stylesheet" href="/css/forms.css">
+</head>
+<body>
+  <div class="forms-container">
+    <div class="forms-header">
+      <h1>Grinder Review</h1>
+      <p>Share your experience with a coffee grinder to help others make informed decisions.</p>
+    </div>
+
+    <form id="reviewForm">
+      <div class="form-group">
+        <label for="grinderName">
+          Grinder Name
+          <span class="required">*</span>
+        </label>
+        <select id="grinderName" name="grinderName" required>
+          <option value="">-- Select a Grinder --</option>
+        </select>
+        <small>Can't find your grinder? Type it in the field above after selecting "Other"</small>
+      </div>
+
+      <div class="form-group">
+        <label>
+          Rating
+          <span class="required">*</span>
+        </label>
+        <div class="star-rating" id="starRating">
+          <span class="star" data-rating="1">☆</span>
+          <span class="star" data-rating="2">☆</span>
+          <span class="star" data-rating="3">☆</span>
+          <span class="star" data-rating="4">☆</span>
+          <span class="star" data-rating="5">☆</span>
+        </div>
+        <input type="hidden" id="rating" name="rating" required />
+        <div class="rating-text" id="ratingText"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="reviewText">
+          Your Review
+          <span class="required">*</span>
+        </label>
+        <textarea 
+          id="reviewText" 
+          name="reviewText" 
+          required 
+          rows="8" 
+          placeholder="Share your experience with this grinder. What do you like? What could be better? How does it compare to others?"
+        ></textarea>
+        <small>Be detailed and honest - your review helps others!</small>
+      </div>
+
+      <div class="form-group">
+        <label for="reviewerName">Your Name (Optional)</label>
+        <input 
+          type="text" 
+          id="reviewerName" 
+          name="reviewerName" 
+          placeholder="Leave blank to remain anonymous"
+        />
+        <small>If left blank, your review will be published as "Anonymous"</small>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <span id="submitText">Submit Review</span>
+        <span id="submitSpinner" class="spinner" style="display:none;"></span>
+      </button>
+
+      <div id="formMessage" class="form-message"></div>
+    </form>
+
+    <div class="forms-nav">
+      <a href="/forms/">← Back to Forms</a> | 
+      <a href="/">Back to Coffee Optimizer</a>
+    </div>
+  </div>
+
+  <script src="/js/reviewForm.js"></script>
+</body>
+</html>

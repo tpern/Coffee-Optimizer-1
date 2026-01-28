@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Coffee Optimizer</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>☕ Admin Panel</h2>
+      </div>
+      <nav>
+        <ul class="sidebar-nav">
+          <li><a href="#" data-page="dashboard" class="active">📊 Dashboard</a></li>
+          <li><a href="#" data-page="contacts">📧 Contact Messages</a></li>
+          <li><a href="#" data-page="reviews">⭐ Reviews</a></li>
+          <li><a href="#" data-page="sca-feedback">📝 SCA Feedback</a></li>
+          <li><a href="#" data-page="brew-reviews">☕ Brew Reviews</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Dashboard Header -->
+      <div class="dashboard-header">
+        <h1 id="pageTitle">Dashboard</h1>
+        <button class="logout-btn" id="logoutBtn">Logout</button>
+      </div>
+
+      <!-- Dashboard Content -->
+      <div id="dashboardContent">
+        <div id="statsContainer" class="stats-grid"></div>
+        <div id="chartsContainer" class="charts-container"></div>
+      </div>
+
+      <!-- Contact Messages Content (hidden by default) -->
+      <div id="contactsContent" style="display:none;"></div>
+
+      <!-- Reviews Content (hidden by default) -->
+      <div id="reviewsContent" style="display:none;"></div>
+
+      <!-- SCA Feedback Content (hidden by default) -->
+      <div id="scaContent" style="display:none;"></div>
+
+      <!-- Brew Reviews Content (hidden by default) -->
+      <div id="brewReviewsContent" style="display:none;"></div>
+    </main>
+  </div>
+
+  <script src="/js/admin-auth.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

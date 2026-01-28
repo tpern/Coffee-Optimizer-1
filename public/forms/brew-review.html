@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brew Review Submission - Coffee Optimizer</title>
+  <link rel="stylesheet" href="/css/forms.css">
+</head>
+<body>
+  <div class="forms-container">
+    <div class="forms-header">
+      <h1>Brew Review Submission</h1>
+      <p>Submit detailed brew data to contribute to coffee research. All fields marked with * are required.</p>
+    </div>
+
+    <form id="brewReviewForm">
+      <div class="form-section">
+        <h2>Grinder Information</h2>
+        
+        <div class="form-group">
+          <label for="grinderUsed">
+            Grinder Used
+            <span class="required">*</span>
+          </label>
+          <select id="grinderUsed" name="grinderUsed" required>
+            <option value="">-- Select a Grinder --</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2>Coffee Bean Information</h2>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="coffeeOrigin">Coffee Origin</label>
+            <input 
+              type="text" 
+              id="coffeeOrigin" 
+              name="coffeeOrigin" 
+              placeholder="e.g., Ethiopia, Colombia"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="roastLevel">Roast Level</label>
+            <select id="roastLevel" name="roastLevel">
+              <option value="">-- Choose --</option>
+              <option value="light">Light</option>
+              <option value="medium">Medium</option>
+              <option value="medium-dark">Medium-Dark</option>
+              <option value="dark">Dark</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2>Brew Parameters</h2>
+        
+        <div class="form-group">
+          <label for="brewMethod">
+            Brew Method
+            <span class="required">*</span>
+          </label>
+          <select id="brewMethod" name="brewMethod" required>
+            <option value="">-- Choose Brew Method --</option>
+            <option value="v60">V60 Pour Over</option>
+            <option value="chemex">Chemex</option>
+            <option value="french-press">French Press</option>
+            <option value="espresso">Espresso</option>
+            <option value="aeropress">Aeropress</option>
+            <option value="moka-pot">Moka Pot</option>
+            <option value="turkish">Turkish</option>
+            <option value="balance-siphon">Balance Siphon</option>
+            <option value="syphon">Syphon</option>
+            <option value="cold-brew">Cold Brew</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="grindSetting">Grind Setting</label>
+            <input 
+              type="number" 
+              id="grindSetting" 
+              name="grindSetting" 
+              step="0.1"
+              placeholder="e.g., 4.5"
+            />
+            <small>Enter the number setting on your grinder</small>
+          </div>
+
+          <div class="form-group">
+            <label for="waterTemperature">Water Temperature (°C)</label>
+            <input 
+              type="number" 
+              id="waterTemperature" 
+              name="waterTemperature" 
+              min="0" 
+              max="100"
+              step="0.5"
+              placeholder="e.g., 93.0"
+            />
+            <small>Enter temperature in Celsius (0-100°C)</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="brewTime">Brew Time</label>
+          <input 
+            type="time" 
+            id="brewTime" 
+            name="brewTime"
+            step="1"
+          />
+          <small>Format: MM:SS (e.g., 03:30 for 3 minutes 30 seconds)</small>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2>Taste & Rating</h2>
+        
+        <div class="form-group">
+          <label for="tasteNotes">Taste Notes</label>
+          <textarea 
+            id="tasteNotes" 
+            name="tasteNotes" 
+            rows="6" 
+            placeholder="Describe the flavor, aroma, body, acidity, and overall taste experience..."
+          ></textarea>
+          <small>Be as detailed as possible - this helps with research!</small>
+        </div>
+
+        <div class="form-group">
+          <label for="overallRating">
+            Overall Rating (1-10)
+            <span class="required">*</span>
+          </label>
+          <div class="slider-container">
+            <input 
+              type="range" 
+              id="overallRating" 
+              name="overallRating" 
+              min="1" 
+              max="10" 
+              value="5"
+              step="0.5"
+              class="slider-rating"
+              required
+            />
+            <div class="slider-value" id="ratingValue">5.0</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="researcherNotes">Researcher Notes (Optional)</label>
+          <textarea 
+            id="researcherNotes" 
+            name="researcherNotes" 
+            rows="4" 
+            placeholder="Any additional observations, notes, or context..."
+          ></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <span id="submitText">Submit Brew Review</span>
+        <span id="submitSpinner" class="spinner" style="display:none;"></span>
+      </button>
+
+      <div id="formMessage" class="form-message"></div>
+    </form>
+
+    <div class="forms-nav">
+      <a href="/forms/">← Back to Forms</a> | 
+      <a href="/">Back to Coffee Optimizer</a>
+    </div>
+  </div>
+
+  <script src="/js/brewReviewForm.js"></script>
+</body>
+</html>
