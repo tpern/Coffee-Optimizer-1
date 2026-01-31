@@ -685,3 +685,146 @@ input[type="checkbox"] {
 .brew-params-grid > div input {
   margin-bottom: 0;
 }
+
+/* ===================================================== */
+/* TASTE SCORING TOOLTIPS */
+/* ===================================================== */
+/* Pure CSS tooltips with smooth fade-in. Info icon indicates more info on hover/tap.
+   Accessible: tooltip-trigger has tabindex="0" and role="button" for keyboard focus. */
+
+.taste-param-row {
+  margin-bottom: 0.75rem;
+}
+
+.taste-param-row label {
+  margin-bottom: 0.25rem;
+}
+
+.tooltip-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+}
+
+.tooltip-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2em;
+  height: 1.2em;
+  font-size: 0.85em;
+  cursor: help;
+  color: #6b7280;
+  position: relative;
+  border-radius: 50%;
+  transition: color 0.2s ease;
+}
+
+.tooltip-trigger:hover,
+.tooltip-trigger:focus {
+  color: #a58d6f;
+  outline: none;
+}
+
+/* Tooltip bubble - positioned above trigger, hidden by default */
+.tooltip-trigger::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  min-width: 220px;
+  max-width: 320px;
+  padding: 0.65em 0.9em;
+  background: #1f2937;
+  color: #f9fafb;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Small arrow pointing down to trigger */
+.tooltip-trigger::after {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  border: 6px solid transparent;
+  border-top-color: #1f2937;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+  z-index: 1001;
+  pointer-events: none;
+}
+
+/* Show tooltip on hover and focus (keyboard accessible) */
+.tooltip-trigger:hover::before,
+.tooltip-trigger:focus::before,
+.tooltip-trigger.tooltip-visible::before {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.tooltip-trigger:hover::after,
+.tooltip-trigger:focus::after,
+.tooltip-trigger.tooltip-visible::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Farmer promo feedback message */
+.farmer-promo-feedback {
+  font-size: 0.9em;
+  margin-top: 0.25rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+}
+
+.farmer-promo-feedback.success {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.farmer-promo-feedback.error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* Mobile: tooltips may need different positioning to avoid overflow */
+@media (max-width: 600px) {
+  .tooltip-trigger::before {
+    left: 0;
+    right: 0;
+    transform: translateX(0) translateY(4px);
+    min-width: 200px;
+    max-width: 100%;
+  }
+
+  .tooltip-trigger:hover::before,
+  .tooltip-trigger:focus::before,
+  .tooltip-trigger.tooltip-visible::before {
+    transform: translateX(0) translateY(0);
+  }
+
+  .tooltip-trigger::after {
+    left: 1em;
+    transform: translateX(0) translateY(4px);
+  }
+
+  .tooltip-trigger:hover::after,
+  .tooltip-trigger:focus::after,
+  .tooltip-trigger.tooltip-visible::after {
+    transform: translateX(0) translateY(0);
+  }
+}

@@ -169,6 +169,46 @@ exports.submitBrewReview = async (req, res) => {
 };
 
 /**
+ * Validate farmer access code
+ * Checks against environment variable FARMER_CODES (comma-separated) or fallback list
+ */
+exports.validateFarmerCode = async (req, res) => {
+  try {
+    const { code } = req.body;
+
+    if (!code || typeof code !== 'string') {
+      return res.status(400).json({
+        success: false,
+        valid: false,
+        message: 'Code is required'
+      });
+    }
+
+    const trimmedCode = code.trim().toUpperCase();
+    const validCodes = (process.env.FARMER_CODES || 'URENA')
+      .split(',')
+      .map(c => c.trim().toUpperCase())
+      .filter(Boolean);
+
+    const valid = validCodes.includes(trimmedCode);
+
+    res.json({
+      success: true,
+      valid,
+      message: valid ? 'Farmer access activated' : 'Invalid farmer code'
+    });
+  } catch (error) {
+    console.error('Farmer code validation error:', error);
+    res.status(500).json({
+      success: false,
+      valid: false,
+      error: 'Validation failed',
+      message: error.message
+    });
+  }
+};
+
+/**
  * Get approved reviews (for public display)
  */
 exports.getApprovedReviews = async (req, res) => {

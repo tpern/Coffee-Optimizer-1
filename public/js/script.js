@@ -346,6 +346,8 @@ const scaWeights = {
   body: 1.0,
   balance: 1.5,
   sweetness: 1.4,
+  uniformity: 0.8,
+  cleanCup: 0.8,
   overall: 1.0
 };
 
@@ -357,6 +359,8 @@ const extractionMapping = {
   sweetness: "under",
   body: "both",
   balance: "both",
+  uniformity: "both",
+  cleanCup: "both",
   overall: "both"
 };
 
@@ -430,7 +434,8 @@ function generateExtractionExplanation(scaFeedback, extractionDiagnosis) {
       label = "acceptable";
     }
     
-    ratings.push(`${status} ${key.charAt(0).toUpperCase() + key.slice(1)}: ${val}/10 (${label})`);
+    const displayKey = key === "cleanCup" ? "Clean Cup" : key.charAt(0).toUpperCase() + key.slice(1);
+    ratings.push(`${status} ${displayKey}: ${val}/10 (${label})`);
   }
   
   let diagnosisText = "";
@@ -954,14 +959,16 @@ document.getElementById("feedback-submit-btn").addEventListener("click", functio
   }
 
   const scaFeedback = {
-    aroma: document.getElementById("aroma").value,
-    flavor: document.getElementById("flavor").value,
-    aftertaste: document.getElementById("aftertaste").value,
-    acidity: document.getElementById("acidity").value,
-    body: document.getElementById("body").value,
-    balance: document.getElementById("balance").value,
-    sweetness: document.getElementById("sweetness").value,
-    overall: document.getElementById("overall").value
+    aroma: document.getElementById("aroma")?.value || "",
+    flavor: document.getElementById("flavor")?.value || "",
+    aftertaste: document.getElementById("aftertaste")?.value || "",
+    acidity: document.getElementById("acidity")?.value || "",
+    body: document.getElementById("body")?.value || "",
+    balance: document.getElementById("balance")?.value || "",
+    sweetness: document.getElementById("sweetness")?.value || "",
+    uniformity: document.getElementById("uniformity")?.value || "",
+    cleanCup: document.getElementById("clean-cup")?.value || "",
+    overall: document.getElementById("overall")?.value || ""
   };
 
   const hasRatings = Object.values(scaFeedback).some(val => val !== "");
@@ -1397,18 +1404,44 @@ function updateAccessLevelDisplay() {
   }
 }
 
-function handleFarmerCodeSubmit(codeInput) {
-  const code = codeInput.value.trim();
-  // Simple validation - you can add the actual farmer code check here
-  if (code && code.toUpperCase() === "URENA") {
-    localStorage.setItem(STORAGE_KEYS.accessLevel, "farmer");
-    updateAccessLevelDisplay();
-    alert("Farmer access activated!");
-    codeInput.value = "";
-    return true;
-  } else {
-    alert("Invalid farmer code.");
-    return false;
+/**
+ * Validate farmer promo code via backend API.
+ * Called on blur when user has entered a code.
+ */
+async function validateFarmerPromoCode(codeInput) {
+  const code = codeInput?.value?.trim();
+  const feedbackEl = document.getElementById("farmer-promo-feedback");
+  if (!feedbackEl) return;
+
+  feedbackEl.style.display = "none";
+  feedbackEl.classList.remove("success", "error");
+
+  if (!code) return;
+
+  try {
+    const res = await fetch("/api/validate-farmer-code", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code })
+    });
+    const data = await res.json();
+
+    feedbackEl.style.display = "block";
+    feedbackEl.textContent = data.message || (data.valid ? "Farmer access activated!" : "Invalid farmer code.");
+
+    if (data.valid) {
+      feedbackEl.classList.add("success");
+      localStorage.setItem(STORAGE_KEYS.accessLevel, "farmer");
+      updateAccessLevelDisplay();
+      codeInput.value = ""; // Clear after success
+    } else {
+      feedbackEl.classList.add("error");
+    }
+  } catch (err) {
+    console.warn("Farmer code validation failed:", err);
+    feedbackEl.style.display = "block";
+    feedbackEl.classList.add("error");
+    feedbackEl.textContent = "Could not validate. Please try again.";
   }
 }
 
@@ -1556,26 +1589,66 @@ function handleOriginChange() {
   }
 }
 
+// =====================================================
+// TOOLTIP MOBILE SUPPORT
+// =====================================================
+// On touch devices, hover doesn't work. Toggle tooltip-visible on tap
+// so tooltips appear on click. Accessible: works with keyboard focus too.
+function initTooltipTapSupport() {
+  document.querySelectorAll(".tooltip-trigger").forEach(trigger => {
+    trigger.addEventListener("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      // Close other open tooltips
+      document.querySelectorAll(".tooltip-trigger.tooltip-visible").forEach(t => {
+        if (t !== this) t.classList.remove("tooltip-visible");
+      });
+      this.classList.toggle("tooltip-visible");
+    });
+    trigger.addEventListener("blur", function() {
+      const self = this;
+      setTimeout(() => self.classList.remove("tooltip-visible"), 150);
+    });
+  });
+  // Close tooltips when clicking outside (e.g. on mobile)
+  document.addEventListener("click", function(e) {
+    if (!e.target.closest(".tooltip-trigger")) {
+      document.querySelectorAll(".tooltip-trigger.tooltip-visible").forEach(t => t.classList.remove("tooltip-visible"));
+    }
+  });
+}
+
 // Check admin status on page load
 document.addEventListener("DOMContentLoaded", function() {
   updateAccessLevelDisplay();
-  
+
   // Check first-time privacy consent
   checkFirstTimeConsent();
-  
+
   // Load privacy settings checkbox state
   const dataSharingCheckbox = document.getElementById("data-sharing-checkbox");
   if (dataSharingCheckbox) {
     dataSharingCheckbox.checked = getUserDataSharingPreference();
   }
-  
+
   // Attach origin change listener for blend details
   const originSelect = document.getElementById("origin");
   if (originSelect) {
     originSelect.addEventListener("change", handleOriginChange);
     handleOriginChange(); // Check initial state
   }
-  
+
+  // Farmer promo code: validate on blur when user has entered something
+  const farmerPromoInput = document.getElementById("farmer-promo-code");
+  if (farmerPromoInput) {
+    farmerPromoInput.addEventListener("blur", function() {
+      validateFarmerPromoCode(this);
+    });
+  }
+
+  // Tooltip tap support for mobile (hover doesn't work on touch)
+  initTooltipTapSupport();
+
   if (isAdmin()) {
     showAdminDashboard();
   } else {

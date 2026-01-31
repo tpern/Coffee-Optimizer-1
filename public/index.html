@@ -22,6 +22,16 @@
       <option value="home">Home Barista</option>
       <option value="cafe">Café / Professional</option>
     </select>
+
+    <!-- Farmer Access Code (Optional) - validates against backend -->
+    <label for="farmer-promo-code">Farmer Access Code (Optional)</label>
+    <input 
+      type="text" 
+      id="farmer-promo-code" 
+      placeholder="Enter code if you're a coffee farmer"
+      autocomplete="off"
+    />
+    <p id="farmer-promo-feedback" class="farmer-promo-feedback" style="display:none;"></p>
   </div>
 
   <!-- SECTION 2: Coffee Details -->
@@ -31,16 +41,49 @@
     <label for="origin">Origin</label>
     <select id="origin">
       <option value="">-- Choose --</option>
-      <option value="Ethiopia">Ethiopia</option>
-      <option value="Kenya">Kenya</option>
-      <option value="Colombia">Colombia</option>
+      <option value="Bolivia">Bolivia</option>
       <option value="Brazil">Brazil</option>
+      <option value="Burundi">Burundi</option>
+      <option value="Cameroon">Cameroon</option>
+      <option value="China">China</option>
+      <option value="Colombia">Colombia</option>
+      <option value="Costa Rica">Costa Rica</option>
+      <option value="Cuba">Cuba</option>
+      <option value="Democratic Republic of Congo">Democratic Republic of Congo</option>
+      <option value="Dominican Republic">Dominican Republic</option>
+      <option value="Ecuador">Ecuador</option>
+      <option value="El Salvador">El Salvador</option>
+      <option value="Ethiopia">Ethiopia</option>
       <option value="Guatemala">Guatemala</option>
-      <option value="Costa-rica">Costa Rica</option>
-      <option value="Panama">Panama</option>
-      <option value="Peru">Peru</option>
+      <option value="Haiti">Haiti</option>
+      <option value="Hawaii (USA)">Hawaii (USA)</option>
+      <option value="Honduras">Honduras</option>
+      <option value="India">India</option>
+      <option value="Indonesia">Indonesia</option>
+      <option value="Jamaica">Jamaica</option>
+      <option value="Kenya">Kenya</option>
+      <option value="Laos">Laos</option>
+      <option value="Malawi">Malawi</option>
       <option value="Mexico">Mexico</option>
-      <option value="blend">Blend</option>
+      <option value="Myanmar">Myanmar</option>
+      <option value="Nicaragua">Nicaragua</option>
+      <option value="Panama">Panama</option>
+      <option value="Papua New Guinea">Papua New Guinea</option>
+      <option value="Peru">Peru</option>
+      <option value="Philippines">Philippines</option>
+      <option value="Puerto Rico">Puerto Rico</option>
+      <option value="Rwanda">Rwanda</option>
+      <option value="Tanzania">Tanzania</option>
+      <option value="Thailand">Thailand</option>
+      <option value="Timor-Leste">Timor-Leste</option>
+      <option value="Uganda">Uganda</option>
+      <option value="Venezuela">Venezuela</option>
+      <option value="Vietnam">Vietnam</option>
+      <option value="Yemen">Yemen</option>
+      <option value="Zambia">Zambia</option>
+      <option value="Zimbabwe">Zimbabwe</option>
+      <option value="Blend">Blend</option>
+      <option value="Other">Other</option>
     </select>
 
     <!-- Blend Details Section (shown when Blend is selected) -->
@@ -203,39 +246,94 @@
     After brewing, rate each attribute from 0-10 (5 = neutral, below 5 = deficient, above 5 = excellent)
   </p>
 
-  <label for="aroma">Aroma (0-10)</label>
-  <input type="number" id="aroma" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  <!-- Tooltip pattern: span.tooltip-trigger wraps label + info icon; data-tooltip holds text. Accessible via aria-describedby and focus. -->
+  <div class="taste-param-row">
+    <label for="aroma" class="tooltip-label">
+      Aroma (0-10)
+      <span class="tooltip-trigger" data-tooltip="The fragrance of the coffee. Notice floral, fruity, nutty, or chocolatey scents. Smell deeply before tasting." tabindex="0" role="button" aria-label="More info about Aroma">ℹ️</span>
+    </label>
+    <input type="number" id="aroma" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  </div>
 
-  <label for="flavor">Flavor (0-10)</label>
-  <input type="number" id="flavor" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  <div class="taste-param-row">
+    <label for="flavor" class="tooltip-label">
+      Flavor (0-10)
+      <span class="tooltip-trigger" data-tooltip="The overall taste impression combining all sensations. Consider sweetness, acidity, and body together." tabindex="0" role="button" aria-label="More info about Flavor">ℹ️</span>
+    </label>
+    <input type="number" id="flavor" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  </div>
 
-  <label for="aftertaste">Aftertaste (0-10)</label>
-  <input type="number" id="aftertaste" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  <div class="taste-param-row">
+    <label for="aftertaste" class="tooltip-label">
+      Aftertaste (0-10)
+      <span class="tooltip-trigger" data-tooltip="The lingering taste after swallowing. Does it finish clean, sweet, or leave pleasant notes?" tabindex="0" role="button" aria-label="More info about Aftertaste">ℹ️</span>
+    </label>
+    <input type="number" id="aftertaste" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  </div>
 
-  <label for="acidity">Acidity (0-10)</label>
-  <input type="number" id="acidity" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  <div class="taste-param-row">
+    <label for="acidity" class="tooltip-label">
+      Acidity (0-10)
+      <span class="tooltip-trigger" data-tooltip="The bright, lively quality. Like citrus or apple - not sour. Good acidity is crisp and refreshing." tabindex="0" role="button" aria-label="More info about Acidity">ℹ️</span>
+    </label>
+    <input type="number" id="acidity" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  </div>
 
-  <label for="body">Body (0-10)</label>
-  <input type="number" id="body" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  <div class="taste-param-row">
+    <label for="body" class="tooltip-label">
+      Body (0-10)
+      <span class="tooltip-trigger" data-tooltip="The weight or texture in your mouth. Is it light like tea, medium, or heavy like cream?" tabindex="0" role="button" aria-label="More info about Body">ℹ️</span>
+    </label>
+    <input type="number" id="body" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  </div>
 
-  <label for="balance">Balance (0-10)</label>
-  <input type="number" id="balance" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  <div class="taste-param-row">
+    <label for="balance" class="tooltip-label">
+      Balance (0-10)
+      <span class="tooltip-trigger" data-tooltip="How well all elements work together. No single aspect should overpower the others." tabindex="0" role="button" aria-label="More info about Balance">ℹ️</span>
+    </label>
+    <input type="number" id="balance" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  </div>
 
-  <label for="sweetness">Sweetness (0-10)</label>
-  <input type="number" id="sweetness" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  <div class="taste-param-row">
+    <label for="sweetness" class="tooltip-label">
+      Sweetness (0-10)
+      <span class="tooltip-trigger" data-tooltip="Natural sweetness from the coffee itself, not added sugar. Can taste like caramel, honey, or fruit." tabindex="0" role="button" aria-label="More info about Sweetness">ℹ️</span>
+    </label>
+    <input type="number" id="sweetness" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  </div>
 
-  <label for="overall">Overall (0-10)</label>
-  <input type="number" id="overall" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  <div class="taste-param-row">
+    <label for="uniformity" class="tooltip-label">
+      Uniformity (0-10)
+      <span class="tooltip-trigger" data-tooltip="Consistency across multiple cups. Does each sip taste the same quality?" tabindex="0" role="button" aria-label="More info about Uniformity">ℹ️</span>
+    </label>
+    <input type="number" id="uniformity" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  </div>
+
+  <div class="taste-param-row">
+    <label for="clean-cup" class="tooltip-label">
+      Clean Cup (0-10)
+      <span class="tooltip-trigger" data-tooltip="Free from defects or off-flavors. Should taste pure without papery, musty, or fermented notes." tabindex="0" role="button" aria-label="More info about Clean Cup">ℹ️</span>
+    </label>
+    <input type="number" id="clean-cup" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  </div>
+
+  <div class="taste-param-row">
+    <label for="overall" class="tooltip-label">
+      Overall (0-10)
+      <span class="tooltip-trigger" data-tooltip="Your overall impression considering all factors. Would you brew this again?" tabindex="0" role="button" aria-label="More info about Overall">ℹ️</span>
+    </label>
+    <input type="number" id="overall" min="0" max="10" step="0.5" placeholder="Rate 0-10" />
+  </div>
 
   <button id="feedback-submit-btn" type="button" style="margin-top:1em;">Submit Feedback & Learn</button>
 </div>
 
-  
-  <!-- SECTION 8: Learning Tools -->
+  <!-- SECTION 8: Learning Tools (Import only - Export removed from public view) -->
   <section class="section">
     <h3>Learning Tools</h3>
-    <button type="button" onclick="exportLearningData()">Export Learning Data</button>
-    <label for="learning-import" style="display:block; margin-top:0.5em;">
+    <label for="learning-import" style="display:block;">
       Import Learning Data:
       <input 
         type="file" 
@@ -247,26 +345,7 @@
     </label>
   </section>
 
-  <!-- SECTION 9: Farmer Access -->
-  <section class="section">
-    <h3>Farmer Access</h3>
-    <p style="font-size:0.9em; color:#666; margin-bottom:0.75em;">Enter farmer access code to unlock premium features.</p>
-    <div class="farmer-code-container">
-      <input 
-        type="text" 
-        id="farmer-code-input" 
-        placeholder="Enter farmer code"
-      />
-      <button 
-        type="button" 
-        onclick="handleFarmerCodeSubmit(document.getElementById('farmer-code-input'))"
-      >
-        Activate
-      </button>
-    </div>
-  </section>
-
-  <!-- SECTION 10: Privacy Settings -->
+  <!-- SECTION 9: Privacy Settings -->
   <section class="section">
     <h3>Privacy & Data Sharing</h3>
     <p style="font-size:0.9em; color:#666; margin-bottom:0.75em;">Control your data sharing preferences for research purposes.</p>
@@ -287,53 +366,9 @@
     </button>
   </section>
 
-  <!-- SECTION 11: Admin Access -->
-  <section class="section">
-    <h3>Admin Access</h3>
-    <p style="font-size:0.9em; color:#666; margin-bottom:0.75em;">Enter admin code to access dashboard.</p>
-    <div class="farmer-code-container">
-      <input 
-        type="text" 
-        id="admin-code-input" 
-        placeholder="Enter admin code"
-      />
-      <button 
-        type="button" 
-        onclick="handleAdminCodeSubmit(document.getElementById('admin-code-input'))"
-      >
-        Activate
-      </button>
-    </div>
-  </section>
+  <!-- Admin: Use /admin/login to access dashboard (no public link on this page) -->
 
-  <!-- SECTION 12: Admin Dashboard (Hidden by default) -->
-  <section class="section" id="admin-dashboard-section" style="display:none;">
-    <h3>🔐 Admin Dashboard</h3>
-    <p style="font-size:0.9em; color:#666; margin-bottom:1em;">View collected user data and statistics.</p>
-    
-    <div id="admin-stats" class="admin-stats-container"></div>
-    
-    <div style="margin-top:2em;">
-      <h4>Research Data</h4>
-      <div id="admin-research-data"></div>
-    </div>
-    
-    <div style="margin-top:2em;">
-      <h4>Brew History</h4>
-      <div id="admin-brew-history"></div>
-    </div>
-    
-    <div style="margin-top:2em;">
-      <button type="button" onclick="exportAdminData()" style="background:#dc2626;">
-        Export All Admin Data
-      </button>
-      <button type="button" onclick="loadAdminDashboardData()" style="margin-top:0.5em;">
-        Refresh Dashboard
-      </button>
-    </div>
-  </section>
-
-  <!-- SECTION 13: Debug & Admin -->
+  <!-- SECTION 10: Debug & Admin -->
   <section class="section">
     <h3>Debug & Admin</h3>
     <button type="button" onclick="resetAllLearning()">Reset All Learning</button>

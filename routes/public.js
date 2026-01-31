@@ -27,11 +27,19 @@ const submitLimiter = rateLimit({
   message: 'Too many submissions from this IP, please try again later.'
 });
 
+// Lighter rate limit for farmer code validation
+const farmerCodeLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: 'Too many validation attempts. Please try again later.'
+});
+
 // Apply rate limiting to all submission endpoints
 router.use('/contact', submitLimiter);
 router.use('/reviews', submitLimiter);
 router.use('/sca-feedback', submitLimiter);
 router.use('/brew-reviews', submitLimiter);
+router.use('/validate-farmer-code', farmerCodeLimiter);
 
 // Public routes
 router.post('/contact', validateContact, publicController.submitContact);
@@ -41,5 +49,8 @@ router.post('/brew-reviews', validateBrewReview, publicController.submitBrewRevi
 
 // Get approved reviews (for public display)
 router.get('/reviews', publicController.getApprovedReviews);
+
+// Validate farmer access code
+router.post('/validate-farmer-code', publicController.validateFarmerCode);
 
 module.exports = router;
