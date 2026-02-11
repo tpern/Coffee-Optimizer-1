@@ -3,35 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coffee Brew Optimizer</title>
+  <title>Coffee Brew Optimizer – Coffee Research Platform</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+<!-- NAVIGATION - Sticky header, smooth scroll to sections -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">☕ Coffee Brew Optimizer</a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#brew-tool">Brew Tool</a>
+      <a href="#taste-feedback-section">Taste Feedback</a>
+      <a href="/forms/">Forms</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO - Coffee-themed gradient, headline, CTAs -->
+<header class="hero">
+  <h1>Coffee Research, Optimized</h1>
+  <p>Contribute to coffee science. Brew better. Rate your cups. Help advance specialty coffee research with data-driven recommendations.</p>
+  <div class="hero-buttons">
+    <a href="#brew-tool" class="hero-cta-primary">Start Brewing</a>
+    <a href="/forms/brew-review.html" class="hero-cta-secondary">Submit Brew Review</a>
+  </div>
+</header>
+
 <div class="container">
-
-  <h1>Coffee Brew Optimizer</h1>
-
-  <!-- ACCESS LEVEL DISPLAY -->
+  <!-- ACCESS LEVEL DISPLAY (shown when farmer/admin activated) -->
   <div id="access-level-display" class="access-level"></div>
 
   <!-- SECTION 1: User Type -->
-  <div class="section">
+  <div class="section" id="brew-tool">
     <label for="user-type">Are you a Home Barista or a Café?</label>
     <select id="user-type">
       <option value="">-- Choose --</option>
       <option value="home">Home Barista</option>
       <option value="cafe">Café / Professional</option>
     </select>
-
-    <!-- Farmer Access Code (Optional) - validates against backend -->
-    <label for="farmer-promo-code">Farmer Access Code (Optional)</label>
-    <input 
-      type="text" 
-      id="farmer-promo-code" 
-      placeholder="Enter code if you're a coffee farmer"
-      autocomplete="off"
-    />
-    <p id="farmer-promo-feedback" class="farmer-promo-feedback" style="display:none;"></p>
   </div>
 
   <!-- SECTION 2: Coffee Details -->
@@ -239,7 +252,7 @@
   </div>
 </div>
 
-<!-- SECTION 7: SCA Taste Feedback (UPDATED - NO DEFAULT VALUES) -->
+<!-- SECTION 7: SCA Taste Feedback -->
 <div class="section" id="taste-feedback-section">
   <h3>Taste Feedback (SCA Scale)</h3>
   <p style="font-size:0.9em; color:#666; margin-bottom:1em;">
@@ -405,5 +418,11 @@
 </div>
 
 <script src="/js/script.js"></script>
+<script>
+  // Mobile nav toggle - hamburger menu
+  document.getElementById('navToggle')?.addEventListener('click', function() {
+    document.getElementById('navLinks')?.classList.toggle('open');
+  });
+</script>
 </body>
 </html>

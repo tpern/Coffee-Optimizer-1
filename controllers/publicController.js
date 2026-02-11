@@ -10,6 +10,7 @@ const Contact = require('../models/Contact');
 const Review = require('../models/Review');
 const SCAFeedback = require('../models/SCAFeedback');
 const BrewReview = require('../models/BrewReview');
+const Farmer = require('../models/Farmer');
 
 /**
  * Submit contact form
@@ -163,6 +164,53 @@ exports.submitBrewReview = async (req, res) => {
     res.status(500).json({
       success: false,
       error: 'Failed to submit brew review',
+      message: error.message
+    });
+  }
+};
+
+/**
+ * Submit farmer signup (direct URL /farmer-signup only)
+ * Validates access code, then saves farmer registration
+ */
+exports.submitFarmerSignup = async (req, res) => {
+  try {
+    const { name, email, farmLocation, accessCode } = req.body;
+
+    const validCodes = (process.env.FARMER_CODES || 'URENA')
+      .split(',')
+      .map(c => c.trim().toUpperCase())
+      .filter(Boolean);
+    const trimmedCode = (accessCode || '').trim().toUpperCase();
+    const isValid = trimmedCode && validCodes.includes(trimmedCode);
+
+    if (!isValid) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid farmer access code',
+        message: 'The farmer access code you entered is not valid. Please check and try again.'
+      });
+    }
+
+    const farmer = new Farmer({
+      name,
+      email,
+      farmLocation,
+      accessCodeVerified: true
+    });
+
+    await farmer.save();
+
+    res.status(201).json({
+      success: true,
+      message: 'Thank you! Your farmer registration has been submitted successfully. We will be in touch soon.',
+      data: { id: farmer._id }
+    });
+  } catch (error) {
+    console.error('Farmer signup error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to submit farmer registration',
       message: error.message
     });
   }

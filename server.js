@@ -53,6 +53,11 @@ app.get('/admin/dashboard', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin', 'dashboard.html'));
 });
 
+// Farmer signup page (direct URL only, not linked from main site)
+app.get('/farmer-signup', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'farmer-signup.html'));
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Coffee Optimizer API is running' });

@@ -1404,47 +1404,6 @@ function updateAccessLevelDisplay() {
   }
 }
 
-/**
- * Validate farmer promo code via backend API.
- * Called on blur when user has entered a code.
- */
-async function validateFarmerPromoCode(codeInput) {
-  const code = codeInput?.value?.trim();
-  const feedbackEl = document.getElementById("farmer-promo-feedback");
-  if (!feedbackEl) return;
-
-  feedbackEl.style.display = "none";
-  feedbackEl.classList.remove("success", "error");
-
-  if (!code) return;
-
-  try {
-    const res = await fetch("/api/validate-farmer-code", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code })
-    });
-    const data = await res.json();
-
-    feedbackEl.style.display = "block";
-    feedbackEl.textContent = data.message || (data.valid ? "Farmer access activated!" : "Invalid farmer code.");
-
-    if (data.valid) {
-      feedbackEl.classList.add("success");
-      localStorage.setItem(STORAGE_KEYS.accessLevel, "farmer");
-      updateAccessLevelDisplay();
-      codeInput.value = ""; // Clear after success
-    } else {
-      feedbackEl.classList.add("error");
-    }
-  } catch (err) {
-    console.warn("Farmer code validation failed:", err);
-    feedbackEl.style.display = "block";
-    feedbackEl.classList.add("error");
-    feedbackEl.textContent = "Could not validate. Please try again.";
-  }
-}
-
 // =====================================================
 // DATA COLLECTION FUNCTIONS
 // =====================================================
@@ -1636,14 +1595,6 @@ document.addEventListener("DOMContentLoaded", function() {
   if (originSelect) {
     originSelect.addEventListener("change", handleOriginChange);
     handleOriginChange(); // Check initial state
-  }
-
-  // Farmer promo code: validate on blur when user has entered something
-  const farmerPromoInput = document.getElementById("farmer-promo-code");
-  if (farmerPromoInput) {
-    farmerPromoInput.addEventListener("blur", function() {
-      validateFarmerPromoCode(this);
-    });
   }
 
   // Tooltip tap support for mobile (hover doesn't work on touch)

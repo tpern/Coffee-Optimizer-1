@@ -17,7 +17,8 @@ const {
   validateContact,
   validateReview,
   validateSCAFeedback,
-  validateBrewReview
+  validateBrewReview,
+  validateFarmerSignup
 } = require('../middleware/validation');
 
 // Rate limiting to prevent abuse
@@ -40,6 +41,7 @@ router.use('/reviews', submitLimiter);
 router.use('/sca-feedback', submitLimiter);
 router.use('/brew-reviews', submitLimiter);
 router.use('/validate-farmer-code', farmerCodeLimiter);
+router.use('/farmer-signup', farmerCodeLimiter);
 
 // Public routes
 router.post('/contact', validateContact, publicController.submitContact);
@@ -52,5 +54,8 @@ router.get('/reviews', publicController.getApprovedReviews);
 
 // Validate farmer access code
 router.post('/validate-farmer-code', publicController.validateFarmerCode);
+
+// Farmer signup (direct URL only, validates code + saves registration)
+router.post('/farmer-signup', validateFarmerSignup, publicController.submitFarmerSignup);
 
 module.exports = router;

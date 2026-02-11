@@ -126,10 +126,36 @@ const validateBrewReview = [
   validate
 ];
 
+/**
+ * Validation rules for farmer signup (direct URL only, /farmer-signup)
+ */
+const validateFarmerSignup = [
+  body('name')
+    .trim()
+    .notEmpty().withMessage('Name is required')
+    .isLength({ max: 100 }).withMessage('Name cannot exceed 100 characters')
+    .escape(),
+  body('email')
+    .trim()
+    .notEmpty().withMessage('Email is required')
+    .isEmail().withMessage('Please enter a valid email address')
+    .normalizeEmail(),
+  body('farmLocation')
+    .trim()
+    .notEmpty().withMessage('Farm location is required')
+    .isLength({ max: 200 }).withMessage('Farm location cannot exceed 200 characters')
+    .escape(),
+  body('accessCode')
+    .trim()
+    .notEmpty().withMessage('Farmer access code is required'),
+  validate
+];
+
 module.exports = {
   validate,
   validateContact,
   validateReview,
   validateSCAFeedback,
-  validateBrewReview
+  validateBrewReview,
+  validateFarmerSignup
 };

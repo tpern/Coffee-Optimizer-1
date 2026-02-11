@@ -26,7 +26,33 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Set up logout button
   document.getElementById('logoutBtn')?.addEventListener('click', logout);
-  
+
+  // Mobile sidebar toggle
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+    sidebar?.classList.toggle('translate-x-0');
+    sidebar?.classList.toggle('-translate-x-full');
+    backdrop?.classList.toggle('opacity-0');
+    backdrop?.classList.toggle('pointer-events-auto');
+  });
+  backdrop?.addEventListener('click', function() {
+    sidebar?.classList.add('-translate-x-full');
+    sidebar?.classList.remove('translate-x-0');
+    backdrop?.classList.add('opacity-0');
+    backdrop?.classList.remove('pointer-events-auto');
+  });
+  document.querySelectorAll('.sidebar-nav a').forEach(link => {
+    link.addEventListener('click', function() {
+      if (window.innerWidth < 768) {
+        sidebar?.classList.add('-translate-x-full');
+        sidebar?.classList.remove('translate-x-0');
+        backdrop?.classList.add('opacity-0');
+        backdrop?.classList.remove('pointer-events-auto');
+      }
+    });
+  });
+
   // Load dashboard by default
   navigateToPage('dashboard');
 });
@@ -55,18 +81,23 @@ function navigateToPage(page) {
   
   // Update active nav link
   document.querySelectorAll('.sidebar-nav a').forEach(link => {
-    link.classList.remove('active');
+    link.classList.remove('active', 'bg-primary-600/20', 'text-white');
+    link.classList.add('text-slate-300');
     if (link.getAttribute('data-page') === page) {
-      link.classList.add('active');
+      link.classList.remove('text-slate-300');
+      link.classList.add('active', 'bg-primary-600/20', 'text-white');
     }
   });
   
-  // Hide all content sections
-  document.getElementById('dashboardContent').style.display = 'none';
-  document.getElementById('contactsContent').style.display = 'none';
-  document.getElementById('reviewsContent').style.display = 'none';
-  document.getElementById('scaContent').style.display = 'none';
-  document.getElementById('brewReviewsContent').style.display = 'none';
+  // Hide all content sections (support both style and Tailwind hidden)
+  const sections = ['dashboardContent', 'contactsContent', 'reviewsContent', 'scaContent', 'brewReviewsContent'];
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.display = 'none';
+      el.classList.add('hidden');
+    }
+  });
   
   // Update page title
   const pageTitle = document.getElementById('pageTitle');
@@ -82,25 +113,32 @@ function navigateToPage(page) {
   }
   
   // Show and load page content
+  function showSection(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.display = 'block';
+      el.classList.remove('hidden');
+    }
+  }
   switch(page) {
     case 'dashboard':
-      document.getElementById('dashboardContent').style.display = 'block';
+      showSection('dashboardContent');
       loadDashboard();
       break;
     case 'contacts':
-      document.getElementById('contactsContent').style.display = 'block';
+      showSection('contactsContent');
       loadContactMessages();
       break;
     case 'reviews':
-      document.getElementById('reviewsContent').style.display = 'block';
+      showSection('reviewsContent');
       loadReviews();
       break;
     case 'sca-feedback':
-      document.getElementById('scaContent').style.display = 'block';
+      showSection('scaContent');
       loadSCAFeedback();
       break;
     case 'brew-reviews':
-      document.getElementById('brewReviewsContent').style.display = 'block';
+      showSection('brewReviewsContent');
       loadBrewReviews();
       break;
   }
@@ -143,38 +181,39 @@ function displayStats(data) {
   const statsContainer = document.getElementById('statsContainer');
   if (!statsContainer) return;
   
+  const totalSubs = data.totals.contacts + data.totals.reviews + data.totals.scaFeedback + data.totals.brewReviews;
   statsContainer.innerHTML = `
-    <div class="stat-card">
-      <h3>Total Submissions</h3>
-      <p class="stat-value">${data.totals.contacts + data.totals.reviews + data.totals.scaFeedback + data.totals.brewReviews}</p>
+    <div class="stat-card bg-white rounded-xl border border-slate-200/80 p-6 shadow-sm hover:shadow-md transition-shadow">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Total Submissions</h3>
+      <p class="stat-value text-2xl font-bold text-slate-800 m-0">${totalSubs}</p>
     </div>
-    <div class="stat-card">
-      <h3>Contact Messages</h3>
-      <p class="stat-value">${data.totals.contacts}</p>
-      <p class="stat-change">+${data.newThisWeek.contacts} this week</p>
+    <div class="stat-card bg-white rounded-xl border border-slate-200/80 p-6 shadow-sm hover:shadow-md transition-shadow">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Contact Messages</h3>
+      <p class="stat-value text-2xl font-bold text-slate-800 m-0">${data.totals.contacts}</p>
+      <p class="stat-change text-sm text-emerald-600 font-medium mt-1">+${data.newThisWeek.contacts} this week</p>
     </div>
-    <div class="stat-card">
-      <h3>Reviews</h3>
-      <p class="stat-value">${data.totals.reviews}</p>
-      <p class="stat-change">+${data.newThisWeek.reviews} this week</p>
+    <div class="stat-card bg-white rounded-xl border border-slate-200/80 p-6 shadow-sm hover:shadow-md transition-shadow">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Reviews</h3>
+      <p class="stat-value text-2xl font-bold text-slate-800 m-0">${data.totals.reviews}</p>
+      <p class="stat-change text-sm text-emerald-600 font-medium mt-1">+${data.newThisWeek.reviews} this week</p>
     </div>
-    <div class="stat-card">
-      <h3>SCA Feedback</h3>
-      <p class="stat-value">${data.totals.scaFeedback}</p>
-      <p class="stat-change">+${data.newThisWeek.scaFeedback} this week</p>
+    <div class="stat-card bg-white rounded-xl border border-slate-200/80 p-6 shadow-sm hover:shadow-md transition-shadow">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">SCA Feedback</h3>
+      <p class="stat-value text-2xl font-bold text-slate-800 m-0">${data.totals.scaFeedback}</p>
+      <p class="stat-change text-sm text-emerald-600 font-medium mt-1">+${data.newThisWeek.scaFeedback} this week</p>
     </div>
-    <div class="stat-card">
-      <h3>Brew Reviews</h3>
-      <p class="stat-value">${data.totals.brewReviews}</p>
-      <p class="stat-change">+${data.newThisWeek.brewReviews} this week</p>
+    <div class="stat-card bg-white rounded-xl border border-slate-200/80 p-6 shadow-sm hover:shadow-md transition-shadow">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Brew Reviews</h3>
+      <p class="stat-value text-2xl font-bold text-slate-800 m-0">${data.totals.brewReviews}</p>
+      <p class="stat-change text-sm text-emerald-600 font-medium mt-1">+${data.newThisWeek.brewReviews} this week</p>
     </div>
-    <div class="stat-card">
-      <h3>Avg Review Rating</h3>
-      <p class="stat-value">${data.averages.reviewRating.toFixed(1)}</p>
+    <div class="stat-card bg-white rounded-xl border border-slate-200/80 p-6 shadow-sm hover:shadow-md transition-shadow">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Avg Review Rating</h3>
+      <p class="stat-value text-2xl font-bold text-slate-800 m-0">${data.averages.reviewRating.toFixed(1)}</p>
     </div>
-    <div class="stat-card">
-      <h3>Avg Brew Rating</h3>
-      <p class="stat-value">${data.averages.brewRating.toFixed(1)}</p>
+    <div class="stat-card bg-white rounded-xl border border-slate-200/80 p-6 shadow-sm hover:shadow-md transition-shadow">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Avg Brew Rating</h3>
+      <p class="stat-value text-2xl font-bold text-slate-800 m-0">${data.averages.brewRating.toFixed(1)}</p>
     </div>
   `;
 }
@@ -202,21 +241,26 @@ function createCharts(data) {
   if (!chartsContainer) return;
   
   chartsContainer.innerHTML = `
-    <div class="chart-card">
-      <h3>Submissions Over Time</h3>
-      <canvas id="submissionsChart"></canvas>
+    <div class="chart-card bg-white rounded-xl border border-slate-200/80 p-6 shadow-sm col-span-1">
+      <h3 class="text-base font-semibold text-slate-800 mb-4">Submissions Over Time</h3>
+      <div class="h-64"><canvas id="submissionsChart"></canvas></div>
     </div>
-    <div class="chart-card">
-      <h3>Rating Distribution</h3>
-      <canvas id="ratingChart"></canvas>
+    <div class="chart-card bg-white rounded-xl border border-slate-200/80 p-6 shadow-sm col-span-1">
+      <h3 class="text-base font-semibold text-slate-800 mb-4">Rating Distribution</h3>
+      <div class="h-64"><canvas id="ratingChart"></canvas></div>
     </div>
-    <div class="chart-card">
-      <h3>Popular Grinders</h3>
-      <canvas id="grindersChart"></canvas>
+    <div class="chart-card bg-white rounded-xl border border-slate-200/80 p-6 shadow-sm col-span-1 xl:col-span-2">
+      <h3 class="text-base font-semibold text-slate-800 mb-4">Popular Grinders</h3>
+      <div class="h-64"><canvas id="grindersChart"></canvas></div>
     </div>
   `;
-  
-  // Submissions over time (line chart)
+
+  const chartColors = {
+    primary: '#2563eb',
+    primaryLight: 'rgba(37, 99, 235, 0.12)',
+    palette: ['#2563eb', '#1d4ed8', '#3b82f6', '#60a5fa', '#93c5fd', '#0ea5e9', '#06b6d4', '#14b8a6', '#10b981', '#22c55e']
+  };
+
   const submissionsCtx = document.getElementById('submissionsChart');
   if (submissionsCtx) {
     new Chart(submissionsCtx, {
@@ -226,21 +270,24 @@ function createCharts(data) {
         datasets: [{
           label: 'Brew Reviews',
           data: data.submissionsOverTime.map(item => item.count),
-          borderColor: '#667eea',
-          backgroundColor: 'rgba(102, 126, 234, 0.1)',
+          borderColor: chartColors.primary,
+          backgroundColor: chartColors.primaryLight,
+          fill: true,
           tension: 0.4
         }]
       },
       options: {
         responsive: true,
-        plugins: {
-          legend: { display: false }
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.06)' } },
+          x: { grid: { display: false } }
         }
       }
     });
   }
-  
-  // Rating distribution (bar chart)
+
   const ratingCtx = document.getElementById('ratingChart');
   if (ratingCtx) {
     new Chart(ratingCtx, {
@@ -248,21 +295,23 @@ function createCharts(data) {
       data: {
         labels: data.ratingDistribution.map(item => `${item._id} Stars`),
         datasets: [{
-          label: 'Number of Reviews',
+          label: 'Reviews',
           data: data.ratingDistribution.map(item => item.count),
-          backgroundColor: '#667eea'
+          backgroundColor: chartColors.primary
         }]
       },
       options: {
         responsive: true,
-        plugins: {
-          legend: { display: false }
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.06)' } },
+          x: { grid: { display: false } }
         }
       }
     });
   }
-  
-  // Popular grinders (pie chart)
+
   const grindersCtx = document.getElementById('grindersChart');
   if (grindersCtx && data.popularGrinders.length > 0) {
     new Chart(grindersCtx, {
@@ -271,17 +320,13 @@ function createCharts(data) {
         labels: data.popularGrinders.map(item => item._id),
         datasets: [{
           data: data.popularGrinders.map(item => item.count),
-          backgroundColor: [
-            '#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe',
-            '#43e97b', '#fa709a', '#fee140', '#30cfd0', '#a8edea'
-          ]
+          backgroundColor: chartColors.palette
         }]
       },
       options: {
         responsive: true,
-        plugins: {
-          legend: { position: 'bottom' }
-        }
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom' } }
       }
     });
   }
@@ -330,54 +375,54 @@ function displayContactMessages(messages, pagination) {
   if (!container) return;
   
   const tableRows = messages.map(msg => `
-    <tr>
-      <td>${formatDate(msg.createdAt)}</td>
-      <td>${escapeHtml(msg.name)}</td>
-      <td>${escapeHtml(msg.email)}</td>
-      <td>${escapeHtml(msg.message.substring(0, 100))}${msg.message.length > 100 ? '...' : ''}</td>
-      <td>
-        <span class="badge ${msg.read ? 'badge-read' : 'badge-unread'}">
+    <tr class="border-b border-slate-200 hover:bg-slate-50/80">
+      <td class="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">${formatDate(msg.createdAt)}</td>
+      <td class="px-4 py-3 text-sm text-slate-800 font-medium">${escapeHtml(msg.name)}</td>
+      <td class="px-4 py-3 text-sm text-slate-600">${escapeHtml(msg.email)}</td>
+      <td class="px-4 py-3 text-sm text-slate-600 max-w-xs truncate">${escapeHtml(msg.message.substring(0, 100))}${msg.message.length > 100 ? '...' : ''}</td>
+      <td class="px-4 py-3">
+        <span class="badge inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium ${msg.read ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
           ${msg.read ? 'Read' : 'Unread'}
         </span>
       </td>
-      <td>
-        <button class="btn-sm btn-edit" onclick="toggleReadStatus('${msg._id}', ${!msg.read})">
+      <td class="px-4 py-3 whitespace-nowrap">
+        <button type="button" class="btn-sm btn-edit mr-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-primary-600 text-white hover:bg-primary-700" onclick="toggleReadStatus('${msg._id}', ${!msg.read})">
           ${msg.read ? 'Mark Unread' : 'Mark Read'}
         </button>
-        <button class="btn-sm btn-delete" onclick="deleteContactMessage('${msg._id}')">Delete</button>
+        <button type="button" class="btn-sm btn-delete px-3 py-1.5 rounded-lg text-xs font-medium bg-red-600 text-white hover:bg-red-700" onclick="deleteContactMessage('${msg._id}')">Delete</button>
       </td>
     </tr>
   `).join('');
-  
+
   container.innerHTML = `
-    <div class="data-section">
-      <div class="data-section-header">
-        <h2>Contact Messages</h2>
-        <div class="table-controls">
-          <input type="text" id="contactsSearch" placeholder="Search..." onkeyup="filterContacts()" />
-          <select id="contactsFilter" onchange="filterContacts()">
+    <div class="data-section bg-white rounded-xl border border-slate-200/80 shadow-sm overflow-hidden">
+      <div class="data-section-header flex flex-wrap items-center justify-between gap-4 px-6 py-5 border-b border-slate-200">
+        <h2 class="text-lg font-bold text-slate-800 m-0">Contact Messages</h2>
+        <div class="table-controls flex flex-wrap items-center gap-2">
+          <input type="text" id="contactsSearch" placeholder="Search..." onkeyup="filterContacts()" class="px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 min-w-[140px]" />
+          <select id="contactsFilter" onchange="filterContacts()" class="px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
             <option value="">All</option>
             <option value="true">Read</option>
             <option value="false">Unread</option>
           </select>
-          <button onclick="exportData('contacts')" class="btn-export">Export CSV</button>
+          <button type="button" onclick="exportData('contacts')" class="btn-export px-4 py-2 rounded-lg text-sm font-medium bg-emerald-600 text-white hover:bg-emerald-700">Export CSV</button>
         </div>
       </div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Message</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${tableRows}
-        </tbody>
-      </table>
+      <div class="overflow-x-auto">
+        <table class="data-table w-full text-left min-w-[800px]">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-200">
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Date</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Name</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Email</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Message</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Status</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Actions</th>
+            </tr>
+          </thead>
+          <tbody>${tableRows}</tbody>
+        </table>
+      </div>
       ${displayPagination(pagination, 'loadContactMessages')}
     </div>
   `;
@@ -426,56 +471,56 @@ function displayReviews(reviews, pagination) {
   if (!container) return;
   
   const tableRows = reviews.map(review => `
-    <tr>
-      <td>${formatDate(review.createdAt)}</td>
-      <td>${escapeHtml(review.grinderName)}</td>
-      <td>${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)} (${review.rating})</td>
-      <td>${escapeHtml(review.reviewText.substring(0, 100))}${review.reviewText.length > 100 ? '...' : ''}</td>
-      <td>${escapeHtml(review.reviewerName)}</td>
-      <td>
-        <span class="badge ${review.approved ? 'badge-approved' : 'badge-pending'}">
+    <tr class="border-b border-slate-200 hover:bg-slate-50/80">
+      <td class="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">${formatDate(review.createdAt)}</td>
+      <td class="px-4 py-3 text-sm text-slate-800 font-medium">${escapeHtml(review.grinderName)}</td>
+      <td class="px-4 py-3 text-sm text-slate-600">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)} (${review.rating})</td>
+      <td class="px-4 py-3 text-sm text-slate-600 max-w-xs truncate">${escapeHtml(review.reviewText.substring(0, 100))}${review.reviewText.length > 100 ? '...' : ''}</td>
+      <td class="px-4 py-3 text-sm text-slate-600">${escapeHtml(review.reviewerName)}</td>
+      <td class="px-4 py-3">
+        <span class="badge inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium ${review.approved ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800'}">
           ${review.approved ? 'Approved' : 'Pending'}
         </span>
       </td>
-      <td>
-        <button class="btn-sm btn-edit" onclick="toggleReviewApproval('${review._id}', ${!review.approved})">
+      <td class="px-4 py-3 whitespace-nowrap">
+        <button type="button" class="btn-sm btn-edit mr-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-primary-600 text-white hover:bg-primary-700" onclick="toggleReviewApproval('${review._id}', ${!review.approved})">
           ${review.approved ? 'Unapprove' : 'Approve'}
         </button>
-        <button class="btn-sm btn-delete" onclick="deleteReview('${review._id}')">Delete</button>
+        <button type="button" class="btn-sm btn-delete px-3 py-1.5 rounded-lg text-xs font-medium bg-red-600 text-white hover:bg-red-700" onclick="deleteReview('${review._id}')">Delete</button>
       </td>
     </tr>
   `).join('');
-  
+
   container.innerHTML = `
-    <div class="data-section">
-      <div class="data-section-header">
-        <h2>Reviews</h2>
-        <div class="table-controls">
-          <input type="text" id="reviewsSearch" placeholder="Search..." onkeyup="filterReviews()" />
-          <select id="reviewsFilter" onchange="filterReviews()">
+    <div class="data-section bg-white rounded-xl border border-slate-200/80 shadow-sm overflow-hidden">
+      <div class="data-section-header flex flex-wrap items-center justify-between gap-4 px-6 py-5 border-b border-slate-200">
+        <h2 class="text-lg font-bold text-slate-800 m-0">Reviews</h2>
+        <div class="table-controls flex flex-wrap items-center gap-2">
+          <input type="text" id="reviewsSearch" placeholder="Search..." onkeyup="filterReviews()" class="px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 min-w-[140px]" />
+          <select id="reviewsFilter" onchange="filterReviews()" class="px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
             <option value="">All</option>
             <option value="true">Approved</option>
             <option value="false">Pending</option>
           </select>
-          <button onclick="exportData('reviews')" class="btn-export">Export CSV</button>
+          <button type="button" onclick="exportData('reviews')" class="btn-export px-4 py-2 rounded-lg text-sm font-medium bg-emerald-600 text-white hover:bg-emerald-700">Export CSV</button>
         </div>
       </div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Grinder</th>
-            <th>Rating</th>
-            <th>Review</th>
-            <th>Reviewer</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${tableRows}
-        </tbody>
-      </table>
+      <div class="overflow-x-auto">
+        <table class="data-table w-full text-left min-w-[800px]">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-200">
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Date</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Grinder</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Rating</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Review</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Reviewer</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Status</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Actions</th>
+            </tr>
+          </thead>
+          <tbody>${tableRows}</tbody>
+        </table>
+      </div>
       ${displayPagination(pagination, 'loadReviews')}
     </div>
   `;
@@ -524,40 +569,40 @@ function displaySCAFeedback(feedback, pagination) {
   if (!container) return;
   
   const tableRows = feedback.map(item => `
-    <tr>
-      <td>${formatDate(item.createdAt)}</td>
-      <td>${escapeHtml(item.feedbackText.substring(0, 150))}${item.feedbackText.length > 150 ? '...' : ''}</td>
-      <td>${item.rating}/10</td>
-      <td>${item.category}</td>
-      <td>
-        <button class="btn-sm btn-delete" onclick="deleteSCAFeedback('${item._id}')">Delete</button>
+    <tr class="border-b border-slate-200 hover:bg-slate-50/80">
+      <td class="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">${formatDate(item.createdAt)}</td>
+      <td class="px-4 py-3 text-sm text-slate-600 max-w-md truncate">${escapeHtml(item.feedbackText.substring(0, 150))}${item.feedbackText.length > 150 ? '...' : ''}</td>
+      <td class="px-4 py-3 text-sm text-slate-800 font-medium">${item.rating}/10</td>
+      <td class="px-4 py-3 text-sm text-slate-600">${item.category}</td>
+      <td class="px-4 py-3 whitespace-nowrap">
+        <button type="button" class="btn-sm btn-delete px-3 py-1.5 rounded-lg text-xs font-medium bg-red-600 text-white hover:bg-red-700" onclick="deleteSCAFeedback('${item._id}')">Delete</button>
       </td>
     </tr>
   `).join('');
-  
+
   container.innerHTML = `
-    <div class="data-section">
-      <div class="data-section-header">
-        <h2>SCA Feedback</h2>
-        <div class="table-controls">
-          <input type="text" id="scaSearch" placeholder="Search..." onkeyup="filterSCA()" />
-          <button onclick="exportData('sca-feedback')" class="btn-export">Export CSV</button>
+    <div class="data-section bg-white rounded-xl border border-slate-200/80 shadow-sm overflow-hidden">
+      <div class="data-section-header flex flex-wrap items-center justify-between gap-4 px-6 py-5 border-b border-slate-200">
+        <h2 class="text-lg font-bold text-slate-800 m-0">SCA Feedback</h2>
+        <div class="table-controls flex flex-wrap items-center gap-2">
+          <input type="text" id="scaSearch" placeholder="Search..." onkeyup="filterSCA()" class="px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 min-w-[140px]" />
+          <button type="button" onclick="exportData('sca-feedback')" class="btn-export px-4 py-2 rounded-lg text-sm font-medium bg-emerald-600 text-white hover:bg-emerald-700">Export CSV</button>
         </div>
       </div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Feedback</th>
-            <th>Rating</th>
-            <th>Category</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${tableRows}
-        </tbody>
-      </table>
+      <div class="overflow-x-auto">
+        <table class="data-table w-full text-left min-w-[600px]">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-200">
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Date</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Feedback</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Rating</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Category</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Actions</th>
+            </tr>
+          </thead>
+          <tbody>${tableRows}</tbody>
+        </table>
+      </div>
       ${displayPagination(pagination, 'loadSCAFeedback')}
     </div>
   `;
@@ -606,35 +651,35 @@ function displayBrewReviews(reviews, pagination) {
   if (!container) return;
   
   const tableRows = reviews.map(review => `
-    <tr>
-      <td>${formatDate(review.createdAt)}</td>
-      <td>${escapeHtml(review.grinderUsed)}</td>
-      <td>${review.brewMethod}</td>
-      <td>${escapeHtml(review.coffeeOrigin || '-')}</td>
-      <td>${review.roastLevel || '-'}</td>
-      <td>${review.waterTemperature ? review.waterTemperature + '°C' : '-'}</td>
-      <td>${review.brewTime ? review.brewTime + 's' : '-'}</td>
-      <td>${review.doseGrams ? review.doseGrams + 'g' : '-'}</td>
-      <td>${review.yieldGrams ? review.yieldGrams + 'g' : '-'}</td>
-      <td>${review.overallRating ? review.overallRating + '/10' : '-'}</td>
-      <td>
-        <button class="btn-sm btn-edit" onclick="viewBrewReview('${review._id}')">View</button>
-        <button class="btn-sm btn-edit" onclick="editBrewReview('${review._id}')">Edit</button>
-        <button class="btn-sm btn-delete" onclick="deleteBrewReview('${review._id}')">Delete</button>
+    <tr class="border-b border-slate-200 hover:bg-slate-50/80">
+      <td class="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">${formatDate(review.createdAt)}</td>
+      <td class="px-4 py-3 text-sm text-slate-800 font-medium">${escapeHtml(review.grinderUsed)}</td>
+      <td class="px-4 py-3 text-sm text-slate-600">${review.brewMethod}</td>
+      <td class="px-4 py-3 text-sm text-slate-600">${escapeHtml(review.coffeeOrigin || '-')}</td>
+      <td class="px-4 py-3 text-sm text-slate-600">${review.roastLevel || '-'}</td>
+      <td class="px-4 py-3 text-sm text-slate-600">${review.waterTemperature ? review.waterTemperature + '°C' : '-'}</td>
+      <td class="px-4 py-3 text-sm text-slate-600">${review.brewTime ? review.brewTime + 's' : '-'}</td>
+      <td class="px-4 py-3 text-sm text-slate-600">${review.doseGrams ? review.doseGrams + 'g' : '-'}</td>
+      <td class="px-4 py-3 text-sm text-slate-600">${review.yieldGrams ? review.yieldGrams + 'g' : '-'}</td>
+      <td class="px-4 py-3 text-sm text-slate-800 font-medium">${review.overallRating ? review.overallRating + '/10' : '-'}</td>
+      <td class="px-4 py-3 whitespace-nowrap">
+        <button type="button" class="btn-sm btn-edit mr-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-primary-600 text-white hover:bg-primary-700" onclick="viewBrewReview('${review._id}')">View</button>
+        <button type="button" class="btn-sm btn-edit mr-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-primary-600 text-white hover:bg-primary-700" onclick="editBrewReview('${review._id}')">Edit</button>
+        <button type="button" class="btn-sm btn-delete px-3 py-1.5 rounded-lg text-xs font-medium bg-red-600 text-white hover:bg-red-700" onclick="deleteBrewReview('${review._id}')">Delete</button>
       </td>
     </tr>
   `).join('');
-  
+
   container.innerHTML = `
-    <div class="data-section">
-      <div class="data-section-header">
-        <h2>Brew Reviews (${pagination.total} total)</h2>
-        <div class="table-controls">
-          <input type="text" id="brewSearch" placeholder="Search..." onkeyup="filterBrewReviews()" />
-          <select id="brewGrinderFilter" onchange="filterBrewReviews()">
+    <div class="data-section bg-white rounded-xl border border-slate-200/80 shadow-sm overflow-hidden">
+      <div class="data-section-header flex flex-wrap items-center justify-between gap-4 px-6 py-5 border-b border-slate-200">
+        <h2 class="text-lg font-bold text-slate-800 m-0">Brew Reviews (${pagination.total} total)</h2>
+        <div class="table-controls flex flex-wrap items-center gap-2">
+          <input type="text" id="brewSearch" placeholder="Search..." onkeyup="filterBrewReviews()" class="px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 min-w-[120px]" />
+          <select id="brewGrinderFilter" onchange="filterBrewReviews()" class="px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
             <option value="">All Grinders</option>
           </select>
-          <select id="brewMethodFilter" onchange="filterBrewReviews()">
+          <select id="brewMethodFilter" onchange="filterBrewReviews()" class="px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
             <option value="">All Methods</option>
             <option value="espresso">Espresso</option>
             <option value="v60">V60</option>
@@ -642,31 +687,31 @@ function displayBrewReviews(reviews, pagination) {
             <option value="french-press">French Press</option>
             <option value="aeropress">Aeropress</option>
           </select>
-          <input type="date" id="brewDateFrom" onchange="filterBrewReviews()" placeholder="From" />
-          <input type="date" id="brewDateTo" onchange="filterBrewReviews()" placeholder="To" />
-          <button onclick="exportData('brew-reviews')" class="btn-export">Export CSV</button>
+          <input type="date" id="brewDateFrom" onchange="filterBrewReviews()" class="px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500" />
+          <input type="date" id="brewDateTo" onchange="filterBrewReviews()" class="px-3 py-2 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500" />
+          <button type="button" onclick="exportData('brew-reviews')" class="btn-export px-4 py-2 rounded-lg text-sm font-medium bg-emerald-600 text-white hover:bg-emerald-700">Export CSV</button>
         </div>
       </div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Grinder</th>
-            <th>Method</th>
-            <th>Origin</th>
-            <th>Roast</th>
-            <th>Temp</th>
-            <th>Time</th>
-            <th>Dose</th>
-            <th>Yield</th>
-            <th>Rating</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${tableRows}
-        </tbody>
-      </table>
+      <div class="overflow-x-auto">
+        <table class="data-table w-full text-left min-w-[900px]">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-200">
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Date</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Grinder</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Method</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Origin</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Roast</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Temp</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Time</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Dose</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Yield</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Rating</th>
+              <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-600">Actions</th>
+            </tr>
+          </thead>
+          <tbody>${tableRows}</tbody>
+        </table>
+      </div>
       ${displayPagination(pagination, 'loadBrewReviews')}
     </div>
   `;
@@ -689,25 +734,29 @@ function escapeHtml(text) {
 function showLoading(containerId) {
   const container = document.getElementById(containerId);
   if (container) {
-    container.innerHTML = '<div class="loading">Loading...</div>';
+    container.innerHTML = '<div class="loading text-center py-16 text-slate-500 font-medium">Loading...</div>';
   }
 }
 
 function showError(containerId, message) {
   const container = document.getElementById(containerId);
   if (container) {
-    container.innerHTML = `<div class="error-message">${message}</div>`;
+    container.innerHTML = `<div class="error-message p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 font-medium">${message}</div>`;
   }
 }
 
 function displayPagination(pagination, loadFunction) {
   if (!pagination || pagination.pages <= 1) return '';
-  
+
   return `
-    <div class="pagination">
-      <button ${pagination.page === 1 ? 'disabled' : ''} onclick="${loadFunction}(${pagination.page - 1})">Previous</button>
-      <span class="page-info">Page ${pagination.page} of ${pagination.pages} (${pagination.total} total)</span>
-      <button ${pagination.page === pagination.pages ? 'disabled' : ''} onclick="${loadFunction}(${pagination.page + 1})">Next</button>
+    <div class="pagination flex items-center justify-center gap-3 py-5 px-6 border-t border-slate-200 bg-slate-50/50">
+      <button type="button" ${pagination.page === 1 ? 'disabled' : ''} onclick="${loadFunction}(${pagination.page - 1})" class="px-4 py-2 rounded-lg border border-slate-300 bg-white text-slate-700 text-sm font-medium hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white">
+        Previous
+      </button>
+      <span class="page-info text-sm text-slate-600 font-medium">Page ${pagination.page} of ${pagination.pages} (${pagination.total} total)</span>
+      <button type="button" ${pagination.page === pagination.pages ? 'disabled' : ''} onclick="${loadFunction}(${pagination.page + 1})" class="px-4 py-2 rounded-lg border border-slate-300 bg-white text-slate-700 text-sm font-medium hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white">
+        Next
+      </button>
     </div>
   `;
 }

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmer Registration - Coffee Optimizer</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Farmer signup page - matches main site coffee-inspired design (Part 2)
+       Direct URL only: /farmer-signup - not linked from main site */
+    .farmer-signup-page {
+      min-height: 100vh;
+      background: var(--bg-cream);
+      font-family: var(--font-body);
+    }
+    .farmer-signup-hero {
+      background: linear-gradient(135deg, var(--primary-espresso) 0%, var(--accent-sienna) 100%);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: white;
+    }
+    .farmer-signup-hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      margin: 0 0 0.5rem 0;
+      font-weight: 600;
+    }
+    .farmer-signup-hero p {
+      margin: 0;
+      font-size: 1rem;
+      opacity: 0.95;
+    }
+    .farmer-signup-form-wrapper {
+      max-width: 520px;
+      margin: -2rem auto 3rem;
+      padding: 0 1rem;
+    }
+    .farmer-signup-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(44, 24, 16, 0.12);
+      padding: 2rem;
+    }
+    .farmer-signup-card .form-group { margin-bottom: 1.5rem; }
+    .farmer-signup-card label {
+      display: block;
+      font-weight: 600;
+      color: var(--text-charcoal);
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+    .farmer-signup-card input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #d4cfc7;
+      border-radius: 8px;
+      font-size: 1rem;
+      background: var(--bg-cream);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .farmer-signup-card input:focus {
+      outline: none;
+      border-color: var(--secondary-caramel);
+      box-shadow: 0 0 0 3px rgba(196, 162, 124, 0.2);
+    }
+    .farmer-signup-card .btn-submit {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary-espresso);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.25s ease, transform 0.1s ease;
+    }
+    .farmer-signup-card .btn-submit:hover {
+      background: var(--accent-sienna);
+      transform: translateY(-1px);
+    }
+    .farmer-signup-card .btn-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .farmer-signup-feedback {
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+    .farmer-signup-feedback.success {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    .farmer-signup-feedback.error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .farmer-signup-back {
+      display: inline-block;
+      margin-top: 1.5rem;
+      color: var(--secondary-caramel);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .farmer-signup-back:hover { color: var(--accent-sienna); }
+  </style>
+</head>
+<body class="farmer-signup-page">
+  <div class="farmer-signup-hero">
+    <h1>☕ Farmer Registration</h1>
+    <p>Coffee Optimizer Research Platform</p>
+  </div>
+
+  <div class="farmer-signup-form-wrapper">
+    <div class="farmer-signup-card">
+      <form id="farmerSignupForm">
+        <div class="form-group">
+          <label for="farmer-name">Name</label>
+          <input type="text" id="farmer-name" name="name" required placeholder="Your full name" />
+        </div>
+        <div class="form-group">
+          <label for="farmer-email">Email</label>
+          <input type="email" id="farmer-email" name="email" required placeholder="your@email.com" />
+        </div>
+        <div class="form-group">
+          <label for="farmer-location">Farm Location / Origin</label>
+          <input type="text" id="farmer-location" name="farmLocation" required placeholder="e.g., Ethiopia, Yirgacheffe" />
+        </div>
+        <div class="form-group">
+          <label for="farmer-code">Farmer Access Code <span style="color:var(--accent-sienna)">*</span></label>
+          <input type="text" id="farmer-code" name="accessCode" required placeholder="Enter your farmer access code" autocomplete="off" />
+        </div>
+        <button type="submit" class="btn-submit" id="farmerSubmitBtn">Submit Registration</button>
+        <div id="farmerFeedback" class="farmer-signup-feedback" style="display:none;"></div>
+      </form>
+    </div>
+    <a href="/" class="farmer-signup-back">← Back to Coffee Optimizer</a>
+  </div>
+
+  <script src="/js/farmer-signup.js"></script>
+</body>
+</html>

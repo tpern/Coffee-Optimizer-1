@@ -2,17 +2,30 @@
  * =====================================================
  * PUBLIC FORMS STYLES
  * =====================================================
- * Styles for user-facing forms matching admin panel design
+ * Matches main site coffee-inspired design (Part 2)
+ * Espresso #2C1810 | Caramel #C4A27C | Sienna #8B4513
  */
 
-* {
-  box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-espresso: #2C1810;
+  --secondary-caramel: #C4A27C;
+  --accent-sienna: #8B4513;
+  --bg-cream: #F5F1E8;
+  --text-charcoal: #2D2D2D;
+  --text-muted: #5C564B;
+  --font-heading: 'Lora', Georgia, serif;
+  --font-body: 'Nunito', 'Inter', system-ui, sans-serif;
 }
+
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: var(--font-body);
+  background: var(--bg-cream);
+  color: var(--text-charcoal);
   min-height: 100vh;
   padding: 2rem 1rem;
 }
@@ -21,9 +34,9 @@ body {
   max-width: 800px;
   margin: 0 auto;
   background: white;
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 3rem;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px rgba(44, 24, 16, 0.12);
 }
 
 .forms-header {
@@ -33,14 +46,15 @@ body {
 
 .forms-header h1 {
   margin: 0 0 0.5rem 0;
+  font-family: var(--font-heading);
   font-size: 2.25rem;
-  color: #1f2937;
-  font-weight: 700;
+  color: var(--primary-espresso);
+  font-weight: 600;
 }
 
 .forms-header p {
   margin: 0;
-  color: #6b7280;
+  color: var(--text-muted);
   font-size: 1.1rem;
 }
 
@@ -49,30 +63,26 @@ body {
 }
 
 .form-section h2 {
+  font-family: var(--font-heading);
   font-size: 1.25rem;
-  color: #374151;
+  color: var(--primary-espresso);
   margin: 0 0 1rem 0;
   font-weight: 600;
   padding-bottom: 0.75rem;
-  border-bottom: 2px solid #e5e7eb;
+  border-bottom: 2px solid #e8e4dc;
 }
 
-.form-group {
-  margin-bottom: 1.75rem;
-}
+.form-group { margin-bottom: 1.75rem; }
 
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #374151;
+  color: var(--text-charcoal);
   font-weight: 500;
   font-size: 0.95rem;
 }
 
-.form-group label .required {
-  color: #dc2626;
-  margin-left: 0.25rem;
-}
+.form-group label .required { color: #dc2626; margin-left: 0.25rem; }
 
 .form-group input[type="text"],
 .form-group input[type="email"],
@@ -82,20 +92,20 @@ body {
 .form-group textarea {
   width: 100%;
   padding: 0.875rem 1rem;
-  border: 2px solid #e5e7eb;
-  border-radius: 8px;
+  border: 1px solid #d4cfc7;
+  border-radius: 10px;
   font-size: 1rem;
   font-family: inherit;
   transition: border-color 0.2s, box-shadow 0.2s;
-  background: white;
+  background: var(--bg-cream);
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: var(--secondary-caramel);
+  box-shadow: 0 0 0 3px rgba(196, 162, 124, 0.2);
 }
 
 .form-group textarea {
@@ -120,20 +130,18 @@ body {
 }
 
 .star-rating .star {
-  color: #d1d5db;
+  color: #d4cfc7;
   transition: color 0.2s, transform 0.1s;
   user-select: none;
 }
 
 .star-rating .star:hover,
 .star-rating .star.active {
-  color: #fbbf24;
+  color: var(--secondary-caramel);
   transform: scale(1.1);
 }
 
-.star-rating .star.active {
-  color: #f59e0b;
-}
+.star-rating .star.active { color: var(--accent-sienna); }
 
 .rating-text {
   margin-top: 0.5rem;
@@ -151,7 +159,7 @@ body {
   width: 100%;
   height: 8px;
   border-radius: 4px;
-  background: #e5e7eb;
+  background: #e8e4dc;
   outline: none;
   -webkit-appearance: none;
   appearance: none;
@@ -163,13 +171,13 @@ body {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #667eea;
+  background: var(--accent-sienna);
   cursor: pointer;
   transition: background 0.2s, transform 0.1s;
 }
 
 .slider-rating::-webkit-slider-thumb:hover {
-  background: #5568d3;
+  background: var(--primary-espresso);
   transform: scale(1.2);
 }
 
@@ -177,14 +185,14 @@ body {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #667eea;
+  background: var(--accent-sienna);
   cursor: pointer;
   border: none;
   transition: background 0.2s, transform 0.1s;
 }
 
 .slider-rating::-moz-range-thumb:hover {
-  background: #5568d3;
+  background: var(--primary-espresso);
   transform: scale(1.2);
 }
 
@@ -193,21 +201,21 @@ body {
   margin-top: 0.75rem;
   font-size: 1.5rem;
   font-weight: 700;
-  color: #667eea;
+  color: var(--accent-sienna);
 }
 
 /* Submit Button */
 .submit-btn {
   width: 100%;
   padding: 1rem 2rem;
-  background: #667eea;
+  background: var(--primary-espresso);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition: background 0.25s, transform 0.1s;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -216,7 +224,7 @@ body {
 }
 
 .submit-btn:hover:not(:disabled) {
-  background: #5568d3;
+  background: var(--accent-sienna);
   transform: translateY(-1px);
 }
 
@@ -271,18 +279,18 @@ body {
   text-align: center;
   margin-top: 3rem;
   padding-top: 2rem;
-  border-top: 2px solid #e5e7eb;
+  border-top: 2px solid #e8e4dc;
 }
 
 .forms-nav a {
-  color: #667eea;
+  color: var(--accent-sienna);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s;
 }
 
 .forms-nav a:hover {
-  color: #5568d3;
+  color: var(--primary-espresso);
   text-decoration: underline;
 }
 
@@ -295,32 +303,33 @@ body {
 }
 
 .form-card {
-  background: #f9fafb;
+  background: var(--bg-cream);
   padding: 2rem;
   border-radius: 12px;
-  border: 2px solid #e5e7eb;
-  transition: all 0.2s;
+  border: 1px solid #e8e4dc;
+  transition: all 0.25s;
   text-decoration: none;
   color: inherit;
   display: block;
 }
 
 .form-card:hover {
-  border-color: #667eea;
+  border-color: var(--secondary-caramel);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+  box-shadow: 0 8px 24px rgba(44, 24, 16, 0.1);
 }
 
 .form-card h3 {
   margin: 0 0 0.75rem 0;
-  color: #1f2937;
+  font-family: var(--font-heading);
+  color: var(--primary-espresso);
   font-size: 1.5rem;
   font-weight: 600;
 }
 
 .form-card p {
   margin: 0;
-  color: #6b7280;
+  color: var(--text-muted);
   font-size: 0.95rem;
   line-height: 1.6;
 }
