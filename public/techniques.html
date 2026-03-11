@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Championship Brewing Techniques | Coffee Optimizer</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/techniques.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="techniques-page">
+  <!-- Site nav (match index.html) -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">☕ Coffee Optimizer</a>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="/#brew-tool">Brew Tool</a>
+        <a href="/#taste-feedback-section">Taste Feedback</a>
+        <a href="/techniques.html" aria-current="page">Techniques</a>
+        <a href="/forms/">Forms</a>
+      </div>
+    </div>
+  </nav>
+
+  <!--
+    TO ADD A NEW BREWING METHOD:
+    1. Copy any .brew-method-card div below
+    2. Update href to /techniques/new-method.html
+    3. Update image src and alt text
+    4. Update method name in .method-overlay h3
+    5. Create new-method.html by copying an existing method page
+    6. Update recipes and content
+  -->
+
+  <header class="techniques-hero">
+    <h1>Championship Brewing Techniques</h1>
+    <p class="subtitle">Master your coffee with methods from World Champions</p>
+    <p class="description">Step-by-step recipes from World Brewers Cup winners and leading coffee educators. Learn pour-over, immersion, and espresso techniques you can use at home.</p>
+  </header>
+
+  <div class="techniques-grid">
+    <!-- TO ADD NEW METHOD: Copy a card below, update href, img src, and method name -->
+
+    <div class="brew-method-card">
+      <a href="/techniques/v60.html">
+        <!-- Replace placeholder with actual image: recommended 800x800px, JPG or WebP -->
+        <img src="/images/methods/v60.jpg" alt="V60 pour over dripper">
+        <div class="method-overlay">
+          <h3>V60 / Pour Over</h3>
+        </div>
+      </a>
+    </div>
+
+    <div class="brew-method-card">
+      <a href="/techniques/chemex.html">
+        <img src="/images/methods/chemex.jpg" alt="Chemex brewer">
+        <div class="method-overlay">
+          <h3>Chemex</h3>
+        </div>
+      </a>
+    </div>
+
+    <div class="brew-method-card">
+      <a href="/techniques/kalita.html">
+        <img src="/images/methods/kalita.jpg" alt="Kalita Wave dripper">
+        <div class="method-overlay">
+          <h3>Kalita Wave</h3>
+        </div>
+      </a>
+    </div>
+
+    <div class="brew-method-card">
+      <a href="/techniques/aeropress.html">
+        <img src="/images/methods/aeropress.jpg" alt="AeroPress">
+        <div class="method-overlay">
+          <h3>AeroPress</h3>
+        </div>
+      </a>
+    </div>
+
+    <div class="brew-method-card">
+      <a href="/techniques/french-press.html">
+        <img src="/images/methods/french-press.jpg" alt="French press">
+        <div class="method-overlay">
+          <h3>French Press</h3>
+        </div>
+      </a>
+    </div>
+
+    <div class="brew-method-card">
+      <a href="/techniques/espresso.html">
+        <img src="/images/methods/espresso.jpg" alt="Espresso machine">
+        <div class="method-overlay">
+          <h3>Espresso</h3>
+        </div>
+      </a>
+    </div>
+
+    <div class="brew-method-card">
+      <a href="/techniques/cold-brew.html">
+        <img src="/images/methods/cold-brew.jpg" alt="Cold brew">
+        <div class="method-overlay">
+          <h3>Cold Brew</h3>
+        </div>
+      </a>
+    </div>
+
+    <div class="brew-method-card">
+      <a href="/techniques/clever.html">
+        <img src="/images/methods/clever.jpg" alt="Clever Dripper">
+        <div class="method-overlay">
+          <h3>Clever Dripper</h3>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <footer class="techniques-footer">
+    <p>Techniques sourced from championship demonstrations and publicly shared coffee education. All methods credited to their creators with links to original sources. For educational purposes.</p>
+    <p><a href="/">← Back to Coffee Optimizer</a></p>
+  </footer>
+
+  <script>
+    document.getElementById('navToggle')?.addEventListener('click', function() {
+      document.getElementById('navLinks')?.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

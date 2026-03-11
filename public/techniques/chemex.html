@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chemex Techniques | Coffee Optimizer</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/techniques.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="techniques-method-page">
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">☕ Coffee Optimizer</a>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="/#brew-tool">Brew Tool</a>
+        <a href="/#taste-feedback-section">Taste Feedback</a>
+        <a href="/techniques.html">Techniques</a>
+        <a href="/forms/">Forms</a>
+      </div>
+    </div>
+  </nav>
+  <div class="method-container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>›</span>
+      <a href="/techniques.html">Techniques</a><span>›</span>
+      <span>Chemex</span>
+    </nav>
+    <div class="method-intro">
+      <h1>Chemex</h1>
+      <p>Thick filters and a classic design give a clean, tea-like cup. These recipes cover standard ratios, advanced techniques, and large batches.</p>
+    </div>
+    <div class="recipe-list">
+      <article class="recipe-card">
+        <header class="recipe-card-header" tabindex="0" role="button" aria-expanded="false">
+          <h3>Classic Chemex Ratio</h3>
+          <div class="recipe-meta">
+            <span class="difficulty-badge difficulty-beginner">Beginner</span>
+          </div>
+          <button type="button" class="recipe-toggle">View Recipe</button>
+        </header>
+        <div class="recipe-card-body" aria-hidden="true">
+          <div class="recipe-card-inner">
+            <div class="recipe-specs">
+              <div class="recipe-spec"><strong>Ratio</strong> 30g : 500g</div>
+              <div class="recipe-spec"><strong>Water temp</strong> 93–96°C</div>
+              <div class="recipe-spec"><strong>Grind</strong> Medium-coarse</div>
+              <div class="recipe-spec"><strong>Time</strong> 4–5 min</div>
+            </div>
+            <ol class="recipe-steps">
+              <li>Rinse thick Chemex filter. Add 30g coffee. Bloom 45s with ~60g water.</li>
+              <li>Pour in circles to 300g, then to 500g. Gentle swirl. Let draw down.</li>
+            </ol>
+            <div class="recipe-tips">Chemex filters absorb more oils—use a slightly coarser grind than V60.</div>
+            <div class="recipe-actions">
+              <button type="button" class="btn-recipe btn-recipe-secondary" data-print-recipe>Print Recipe</button>
+              <a href="/forms/brew-review.html" class="btn-recipe btn-recipe-primary">Try This Method</a>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="recipe-card">
+        <header class="recipe-card-header" tabindex="0" role="button" aria-expanded="false">
+          <h3>Matt Perger's Chemex</h3>
+          <div class="recipe-meta">
+            <span class="recipe-creator">Matt Perger</span>
+            <span class="difficulty-badge difficulty-advanced">Advanced</span>
+          </div>
+          <button type="button" class="recipe-toggle">View Recipe</button>
+        </header>
+        <div class="recipe-card-body" aria-hidden="true">
+          <div class="recipe-card-inner">
+            <div class="recipe-specs">
+              <div class="recipe-spec"><strong>Ratio</strong> 1:16–1:17</div>
+              <div class="recipe-spec"><strong>Water temp</strong> 93–96°C</div>
+              <div class="recipe-spec"><strong>Grind</strong> Fine (faster flow)</div>
+            </div>
+            <ol class="recipe-steps">
+              <li>Finer grind, multiple pours, emphasis on even extraction and flat bed.</li>
+              <li>Search “Matt Perger Chemex” for full technique videos.</li>
+            </ol>
+            <div class="recipe-actions">
+              <button type="button" class="btn-recipe btn-recipe-secondary" data-print-recipe>Print Recipe</button>
+              <a href="/forms/brew-review.html" class="btn-recipe btn-recipe-primary">Try This Method</a>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="recipe-card">
+        <header class="recipe-card-header" tabindex="0" role="button" aria-expanded="false">
+          <h3>Large Batch Chemex</h3>
+          <div class="recipe-meta">
+            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+          </div>
+          <button type="button" class="recipe-toggle">View Recipe</button>
+        </header>
+        <div class="recipe-card-body" aria-hidden="true">
+          <div class="recipe-card-inner">
+            <div class="recipe-specs">
+              <div class="recipe-spec"><strong>Ratio</strong> 60g : 1000g</div>
+              <div class="recipe-spec"><strong>Water temp</strong> 93–96°C</div>
+              <div class="recipe-spec"><strong>Grind</strong> Medium-coarse</div>
+              <div class="recipe-spec"><strong>Time</strong> 6–8 min</div>
+            </div>
+            <ol class="recipe-steps">
+              <li>Scale up ratio. Bloom 90g, 45s. Multiple pours to 600g, then 1000g.</li>
+              <li>Expect longer draw-down; keep bed flat and even.</li>
+            </ol>
+            <div class="recipe-actions">
+              <button type="button" class="btn-recipe btn-recipe-secondary" data-print-recipe>Print Recipe</button>
+              <a href="/forms/brew-review.html" class="btn-recipe btn-recipe-primary">Try This Method</a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+  <footer class="techniques-footer">
+    <p>Techniques sourced from championship demonstrations and publicly shared coffee education. All methods credited to their creators with links to original sources. For educational purposes.</p>
+    <p><a href="/techniques.html">← Back to Techniques</a></p>
+  </footer>
+  <script src="/js/techniques.js"></script>
+  <script>document.getElementById('navToggle')?.addEventListener('click', function() { document.getElementById('navLinks')?.classList.toggle('open'); });</script>
+</body>
+</html>

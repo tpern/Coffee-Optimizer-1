@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espresso Techniques | Coffee Optimizer</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/techniques.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="techniques-method-page">
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">☕ Coffee Optimizer</a>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="/#brew-tool">Brew Tool</a>
+        <a href="/#taste-feedback-section">Taste Feedback</a>
+        <a href="/techniques.html">Techniques</a>
+        <a href="/forms/">Forms</a>
+      </div>
+    </div>
+  </nav>
+  <div class="method-container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>›</span>
+      <a href="/techniques.html">Techniques</a><span>›</span>
+      <span>Espresso</span>
+    </nav>
+    <div class="method-intro">
+      <h1>Espresso</h1>
+      <p>Pressure, grind, and time in balance. These guides cover dialing in, championship-style parameters, and professional workflows.</p>
+    </div>
+    <div class="recipe-list">
+      <article class="recipe-card">
+        <header class="recipe-card-header" tabindex="0" role="button" aria-expanded="false">
+          <h3>Dialing In Basics</h3>
+          <div class="recipe-meta">
+            <span class="difficulty-badge difficulty-beginner">Beginner</span>
+          </div>
+          <button type="button" class="recipe-toggle">View Recipe</button>
+        </header>
+        <div class="recipe-card-body" aria-hidden="true">
+          <div class="recipe-card-inner">
+            <div class="recipe-specs">
+              <div class="recipe-spec"><strong>Dose</strong> 18–20g</div>
+              <div class="recipe-spec"><strong>Yield</strong> 36–40g (1:2)</div>
+              <div class="recipe-spec"><strong>Time</strong> 25–30s</div>
+              <div class="recipe-spec"><strong>Temp</strong> 93–96°C</div>
+            </div>
+            <ol class="recipe-steps">
+              <li>Start with 18g dose, 36g yield, 25–30s. Grind to hit time first.</li>
+              <li>Too fast → grind finer. Too slow → grind coarser.</li>
+              <li>Then adjust ratio: more yield for lighter body, less for intensity.</li>
+            </ol>
+            <div class="recipe-actions">
+              <button type="button" class="btn-recipe btn-recipe-secondary" data-print-recipe>Print Recipe</button>
+              <a href="/forms/brew-review.html" class="btn-recipe btn-recipe-primary">Try This Method</a>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="recipe-card">
+        <header class="recipe-card-header" tabindex="0" role="button" aria-expanded="false">
+          <h3>Championship Espresso Profile</h3>
+          <div class="recipe-meta">
+            <span class="recipe-creator">World Barista Championship standards</span>
+            <span class="difficulty-badge difficulty-advanced">Advanced</span>
+          </div>
+          <button type="button" class="recipe-toggle">View Recipe</button>
+        </header>
+        <div class="recipe-card-body" aria-hidden="true">
+          <div class="recipe-card-inner">
+            <div class="recipe-specs">
+              <div class="recipe-spec"><strong>Dose</strong> 18–22g</div>
+              <div class="recipe-spec"><strong>Yield</strong> 1:2–1:2.5</div>
+              <div class="recipe-spec"><strong>Time</strong> 28–35s</div>
+              <div class="recipe-spec"><strong>Pre-infusion</strong> Optional 5–8s</div>
+            </div>
+            <ol class="recipe-steps">
+              <li>Pre-infusion at low pressure, then ramp to 9 bar.</li>
+              <li>Consistent tamp, WDT for even extraction. Track extraction % if possible.</li>
+            </ol>
+            <div class="recipe-actions">
+              <button type="button" class="btn-recipe btn-recipe-secondary" data-print-recipe>Print Recipe</button>
+              <a href="/forms/brew-review.html" class="btn-recipe btn-recipe-primary">Try This Method</a>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="recipe-card">
+        <header class="recipe-card-header" tabindex="0" role="button" aria-expanded="false">
+          <h3>Lance Hedrick's Workflow</h3>
+          <div class="recipe-meta">
+            <span class="recipe-creator">Lance Hedrick</span>
+            <span class="difficulty-badge difficulty-advanced">Advanced</span>
+          </div>
+          <button type="button" class="recipe-toggle">View Recipe</button>
+        </header>
+        <div class="recipe-card-body" aria-hidden="true">
+          <div class="recipe-card-inner">
+            <div class="recipe-specs">
+              <div class="recipe-spec"><strong>Focus</strong> Puck prep, distribution</div>
+            </div>
+            <ol class="recipe-steps">
+              <li>WDT, level, tamp. Emphasis on even flow and avoiding channeling.</li>
+              <li>Search “Lance Hedrick espresso” for full workflow and profiling.</li>
+            </ol>
+            <div class="recipe-actions">
+              <button type="button" class="btn-recipe btn-recipe-secondary" data-print-recipe>Print Recipe</button>
+              <a href="/forms/brew-review.html" class="btn-recipe btn-recipe-primary">Try This Method</a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+  <footer class="techniques-footer">
+    <p>Techniques sourced from championship demonstrations and publicly shared coffee education. All methods credited to their creators with links to original sources. For educational purposes.</p>
+    <p><a href="/techniques.html">← Back to Techniques</a></p>
+  </footer>
+  <script src="/js/techniques.js"></script>
+  <script>document.getElementById('navToggle')?.addEventListener('click', function() { document.getElementById('navLinks')?.classList.toggle('open'); });</script>
+</body>
+</html>

@@ -1,0 +1,423 @@
+/**
+ * =====================================================
+ * BREWING TECHNIQUES - DEDICATED STYLING
+ * =====================================================
+ * Matches site coffee palette. Grid layout, method cards,
+ * recipe cards with collapsible sections. Print-friendly.
+ */
+
+/* Use site design tokens when loaded from techniques pages */
+.techniques-page,
+.techniques-method-page {
+  --primary-espresso: #2C1810;
+  --secondary-caramel: #C4A27C;
+  --accent-sienna: #8B4513;
+  --bg-cream: #F5F1E8;
+  --text-charcoal: #2D2D2D;
+  --text-muted: #5C564B;
+  --font-heading: 'Lora', Georgia, serif;
+  --font-body: 'Nunito', 'Inter', system-ui, sans-serif;
+  --shadow-card: 0 2px 12px rgba(44, 24, 16, 0.06);
+  --shadow-card-hover: 0 8px 24px rgba(44, 24, 16, 0.1);
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --transition-normal: 0.25s ease;
+}
+
+/* ========== MAIN LANDING PAGE GRID ========== */
+.techniques-hero {
+  background: linear-gradient(135deg, var(--primary-espresso) 0%, var(--accent-sienna) 100%);
+  color: white;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.techniques-hero h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  margin: 0 0 0.5rem 0;
+  color: white;
+}
+
+.techniques-hero .subtitle {
+  font-size: 1.15rem;
+  opacity: 0.95;
+  margin: 0 0 0.75rem 0;
+}
+
+.techniques-hero .description {
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.techniques-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+@media (max-width: 1024px) {
+  .techniques-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .techniques-grid {
+    grid-template-columns: 1fr;
+    padding: 1.5rem 1rem 3rem;
+  }
+}
+
+/* Card: 4:3 aspect ratio, image fills, overlay for text */
+.brew-method-card {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--primary-espresso);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.brew-method-card:hover,
+.brew-method-card:focus-within {
+  transform: scale(1.03);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.brew-method-card a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  text-decoration: none;
+  color: white;
+  min-height: 44px; /* Touch target */
+}
+
+.brew-method-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.brew-method-card .method-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(44, 24, 16, 0.85) 0%, rgba(44, 24, 16, 0.4) 50%, transparent 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1.25rem;
+}
+
+.brew-method-card .method-overlay h3 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.brew-method-card a:focus {
+  outline: 2px solid var(--secondary-caramel);
+  outline-offset: 2px;
+}
+
+/* ========== METHOD PAGE LAYOUT ========== */
+.techniques-method-page .method-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.breadcrumb {
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.breadcrumb a {
+  color: var(--accent-sienna);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb span {
+  color: var(--text-muted);
+  margin: 0 0.35rem;
+}
+
+.method-intro {
+  margin-bottom: 2rem;
+}
+
+.method-intro h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--primary-espresso);
+  margin: 0 0 0.5rem 0;
+}
+
+.method-intro p {
+  color: var(--text-charcoal);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ========== RECIPE CARDS (COLLAPSIBLE) ========== */
+.recipe-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+  border: 1px solid rgba(44, 24, 16, 0.08);
+}
+
+.recipe-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  min-height: 44px;
+  transition: background 0.2s;
+}
+
+.recipe-card-header:hover {
+  background: var(--bg-cream);
+}
+
+.recipe-card-header:focus {
+  outline: 2px solid var(--secondary-caramel);
+  outline-offset: -2px;
+}
+
+.recipe-card-header h3 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  color: var(--primary-espresso);
+  flex: 1 1 200px;
+}
+
+.recipe-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.recipe-creator {
+  font-weight: 500;
+  color: var(--text-charcoal);
+}
+
+.difficulty-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.difficulty-beginner { background: #d1fae5; color: #065f46; }
+.difficulty-intermediate { background: #fef3c7; color: #92400e; }
+.difficulty-advanced { background: #fee2e2; color: #991b1b; }
+
+.recipe-toggle {
+  flex-shrink: 0;
+  padding: 0.5rem 1rem;
+  background: var(--primary-espresso);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.recipe-toggle:hover {
+  background: var(--accent-sienna);
+}
+
+.recipe-toggle[aria-expanded="true"] {
+  background: var(--accent-sienna);
+}
+
+.recipe-card-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.recipe-card-body.is-open {
+  max-height: 1200px; /* Enough for expanded content */
+}
+
+.recipe-card-inner {
+  padding: 0 1.5rem 1.5rem;
+  border-top: 1px solid rgba(44, 24, 16, 0.08);
+}
+
+.recipe-specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding: 1rem 0;
+}
+
+.recipe-spec {
+  padding: 0.75rem;
+  background: var(--bg-cream);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+}
+
+.recipe-spec strong {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.recipe-steps {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.recipe-steps li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.recipe-tips {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f0fdf4;
+  border-radius: var(--radius-md);
+  border-left: 4px solid #22c55e;
+  font-size: 0.95rem;
+}
+
+.recipe-source {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.recipe-source a {
+  color: var(--accent-sienna);
+  text-decoration: none;
+}
+
+.recipe-source a:hover {
+  text-decoration: underline;
+}
+
+.recipe-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e8e4dc;
+}
+
+.btn-recipe {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  font-family: inherit;
+}
+
+.btn-recipe-primary {
+  background: var(--primary-espresso);
+  color: white;
+}
+
+.btn-recipe-primary:hover {
+  background: var(--accent-sienna);
+  transform: translateY(-1px);
+}
+
+.btn-recipe-secondary {
+  background: var(--bg-cream);
+  color: var(--text-charcoal);
+  border: 1px solid #d4cfc7;
+}
+
+.btn-recipe-secondary:hover {
+  background: #e8e4dc;
+}
+
+/* ========== FOOTER ATTRIBUTION ========== */
+.techniques-footer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  border-top: 1px solid #e8e4dc;
+}
+
+/* ========== PRINT STYLES ========== */
+@media print {
+  .site-nav,
+  .breadcrumb .back-link,
+  .recipe-toggle,
+  .btn-recipe,
+  .techniques-footer .no-print {
+    display: none !important;
+  }
+
+  .recipe-card-body,
+  .recipe-card-body.is-open {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .recipe-card-header {
+    cursor: default;
+  }
+
+  .techniques-page,
+  .techniques-method-page {
+    background: white;
+  }
+
+  .recipe-card {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+}

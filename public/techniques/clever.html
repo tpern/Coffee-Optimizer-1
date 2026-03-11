@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clever Dripper Techniques | Coffee Optimizer</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/techniques.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="techniques-method-page">
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">☕ Coffee Optimizer</a>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="/#brew-tool">Brew Tool</a>
+        <a href="/#taste-feedback-section">Taste Feedback</a>
+        <a href="/techniques.html">Techniques</a>
+        <a href="/forms/">Forms</a>
+      </div>
+    </div>
+  </nav>
+  <div class="method-container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>›</span>
+      <a href="/techniques.html">Techniques</a><span>›</span>
+      <span>Clever Dripper</span>
+    </nav>
+    <div class="method-intro">
+      <h1>Clever Dripper</h1>
+      <p>Immersion plus filtered draw-down. Steep, then place on a mug to drain. These recipes cover standard, extended steep, and a hybrid pour-over style.</p>
+    </div>
+    <div class="recipe-list">
+      <article class="recipe-card">
+        <header class="recipe-card-header" tabindex="0" role="button" aria-expanded="false">
+          <h3>Standard Clever Recipe</h3>
+          <div class="recipe-meta">
+            <span class="difficulty-badge difficulty-beginner">Beginner</span>
+          </div>
+          <button type="button" class="recipe-toggle">View Recipe</button>
+        </header>
+        <div class="recipe-card-body" aria-hidden="true">
+          <div class="recipe-card-inner">
+            <div class="recipe-specs">
+              <div class="recipe-spec"><strong>Ratio</strong> 25g : 400g</div>
+              <div class="recipe-spec"><strong>Water temp</strong> 93–96°C</div>
+              <div class="recipe-spec"><strong>Grind</strong> Medium</div>
+              <div class="recipe-spec"><strong>Steep</strong> 3–4 min, then drain</div>
+            </div>
+            <ol class="recipe-steps">
+              <li>Add coffee, pour water, stir. Steep 3–4 minutes with valve closed.</li>
+              <li>Place on mug to open valve. Draw-down ~1 min. Remove dripper.</li>
+            </ol>
+            <div class="recipe-actions">
+              <button type="button" class="btn-recipe btn-recipe-secondary" data-print-recipe>Print Recipe</button>
+              <a href="/forms/brew-review.html" class="btn-recipe btn-recipe-primary">Try This Method</a>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="recipe-card">
+        <header class="recipe-card-header" tabindex="0" role="button" aria-expanded="false">
+          <h3>Extended Steep Clever</h3>
+          <div class="recipe-meta">
+            <span class="difficulty-badge difficulty-beginner">Beginner</span>
+          </div>
+          <button type="button" class="recipe-toggle">View Recipe</button>
+        </header>
+        <div class="recipe-card-body" aria-hidden="true">
+          <div class="recipe-card-inner">
+            <div class="recipe-specs">
+              <div class="recipe-spec"><strong>Ratio</strong> 25g : 400g</div>
+              <div class="recipe-spec"><strong>Water temp</strong> 90–93°C</div>
+              <div class="recipe-spec"><strong>Grind</strong> Medium-coarse</div>
+              <div class="recipe-spec"><strong>Steep</strong> 5–6 min</div>
+            </div>
+            <ol class="recipe-steps">
+              <li>Longer steep for more body. Coarser grind to avoid over-extraction.</li>
+              <li>Drain when ready. Slower draw-down is normal.</li>
+            </ol>
+            <div class="recipe-actions">
+              <button type="button" class="btn-recipe btn-recipe-secondary" data-print-recipe>Print Recipe</button>
+              <a href="/forms/brew-review.html" class="btn-recipe btn-recipe-primary">Try This Method</a>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="recipe-card">
+        <header class="recipe-card-header" tabindex="0" role="button" aria-expanded="false">
+          <h3>Hybrid Pour-Over Style</h3>
+          <div class="recipe-meta">
+            <span class="difficulty-badge difficulty-intermediate">Intermediate</span>
+          </div>
+          <button type="button" class="recipe-toggle">View Recipe</button>
+        </header>
+        <div class="recipe-card-body" aria-hidden="true">
+          <div class="recipe-card-inner">
+            <div class="recipe-specs">
+              <div class="recipe-spec"><strong>Ratio</strong> 20g : 320g</div>
+              <div class="recipe-spec"><strong>Water temp</strong> 93–96°C</div>
+              <div class="recipe-spec"><strong>Grind</strong> Medium-fine</div>
+              <div class="recipe-spec"><strong>Method</strong> Bloom + 2 pours, then drain</div>
+            </div>
+            <ol class="recipe-steps">
+              <li>Bloom 40g, 30s. Pour to 160g, wait 30s. Pour to 320g. Steep 1 min, then drain.</li>
+              <li>Combines immersion body with more clarity from multiple pours.</li>
+            </ol>
+            <div class="recipe-actions">
+              <button type="button" class="btn-recipe btn-recipe-secondary" data-print-recipe>Print Recipe</button>
+              <a href="/forms/brew-review.html" class="btn-recipe btn-recipe-primary">Try This Method</a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+  <footer class="techniques-footer">
+    <p>Techniques sourced from championship demonstrations and publicly shared coffee education. All methods credited to their creators with links to original sources. For educational purposes.</p>
+    <p><a href="/techniques.html">← Back to Techniques</a></p>
+  </footer>
+  <script src="/js/techniques.js"></script>
+  <script>document.getElementById('navToggle')?.addEventListener('click', function() { document.getElementById('navLinks')?.classList.toggle('open'); });</script>
+</body>
+</html>
